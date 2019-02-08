@@ -27,7 +27,7 @@ A browser will consider a DV certificate to be valid for connections to this sit
 ### Condition 1:
 
 * The connection certificate is a valid DV certificate (eg: such as those created by [Filippo Valsorda's `mkcert`](https://github.com/FiloSottile/mkcert) 
-* **and** the certificate satisfies the existing standard trust rules for the webpage in question
+* **and** the certificate satisfies the standard trust rules for the webpage in question
 * **and** the certificate is signed by a Certificate Authority Key which matches a root certificate that has been manually added to the local trust store
 
 ...or...
@@ -35,14 +35,14 @@ A browser will consider a DV certificate to be valid for connections to this sit
 ### Condition 2:
 
 * The connection certificate is a valid DV certificate (eg: `mkcert`, again)
-* and the certificate satisfies the existing standard trust rules for the webpage in question
+* and the certificate satisfies the standard trust rules for the webpage in question
 * **but** the certificate is signed by a Certificate Authority Key that cannot be resolved in the local trust store
 * **however** the rightmost two labels of **all Subject Alt Names in the certificate, without exception**, match those of the site (ie: `examplewebsitexx.onion`)
 * **and** no Common Name is supplied on the certificate
 
 ## Rationale
 
-Condition 1 has been extensively tested by the author, and is simple and obvious; extant web browsers do not take any special steps to avoid connections to `.onion` websites, and when connected to the Tor network they are abstracted from the network via a standard `SOCKS5` proxy which also performs name resolution, thereby obviating any DNS concerns.
+Condition 1 has been extensively tested by the author, and is simple, obvious, and practically redundant: it already works. Extant web browsers do not take any special steps to avoid connections to `.onion` websites, and when connected to the Tor network they are abstracted from the network via a standard `SOCKS5` proxy which also performs name resolution, thereby obviating any DNS concerns.
 
 Condition 2 is novel, but conceptually simple: to validate a DV certificate fully for connecting to a given site - including, eg: failing validation if not-before / not-after date boundaries are exceeded - *except* to selectively ignore failure to validate the certificate chain / an inability to resolve the Certificate Authority Key Identifier, in the circumstances that the certificate **could only ever be used to communicate with the given onion address/sitename**. 
 
