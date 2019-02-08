@@ -1,4 +1,4 @@
-# A simple proposal for provision of DV certificates to Onion Sites
+# A simple proposal to provide DV certificates to Onion Sites
 
 ## Outline
 
