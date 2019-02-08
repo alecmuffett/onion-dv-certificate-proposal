@@ -53,6 +53,13 @@ I believe this proposal addresses the trust requirements of binding onion addres
 
 This proposal also (currently) leaves open a non-exclusionary role[1] for existing EV Onion Certificates: for those purposes where more than one Onion address, or a mixture of Onion Addresses and DNS Names, **must** be present in a single certificate; at first consideration this would broadly be in line with the original vision of EV certificates as being "extra validated"
 
+## Potential FAQs
+
+* Q: What if a "real" CA issues a DV certificate containing both Onion and DNS addresses?
+  * A: They're not allowed to, but in any case if someone really wanted one they could buy a "combo" EV certificate which can contain both already
+* Q: Why repeat the "rightmost label" stuff?
+  * A: Mostly emphasis / to suggest a "sniff test" for implementers; plus I was vaguely wondering about the converse, viz: whether it was necessary to somehow "ban" `mkcert` users from generating their own "combo" certs, before I realised that it would be foolish, fruitless and unnecessary to do so.
+
 - Alec Muffett, 8 Feb 2019
 
 [1] ie: individuals can work around it by careful provision of multiple certificates
