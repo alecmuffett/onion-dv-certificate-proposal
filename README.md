@@ -40,6 +40,7 @@ A browser will consider a DV certificate to be valid for connections to this sit
 * **however** the rightmost label of **all Subject Alt Names in the certificate, without exception**, is `onion`
 * **and** the rightmost two labels of **all Subject Alt Names in the certificate, without exception**, match those of the given onion site (ie: `examplewebsitexx.onion`)
 * **and** no Common Name is supplied on the certificate
+* **and** the certificate is a "leaf" / not used for validating other certs.
 
 ## Rationale
 
@@ -84,6 +85,16 @@ This proposal also (currently) leaves open a non-exclusionary role[1] for existi
   * A: With v3 onion addresses, the onion address string is *literally* the entire public key; therefore the public key will be embedded, probably several times over, in the SubjectAltNames of the certificate; string comparison of the rightmost two labels will guarantee the binding, and the additional "cabf-TorServiceDescriptorHash" is unnecessary.
   * With v2 addresses, the onion address string is a 80-bit truncated SHA-1 hash of the public key; again string comparison of the rightmost two labels can provide the binding, but the question is whether a truncated hash is "sufficient" binding. The answer is yes, because the Tor network **itself** will accept as legitimate any public key which can match this hash, and will send traffic to it. Tor's behaviour is the "source of truth" in this matter, not the contents of the certificate.
   * Because in *any* self-service DV scenario, an attacker will be able to roll their own TLS certificate for this impostor key (because otherwise it would not be "self-service") then there is no additional risk, nor any certificate authority to bear it. Ergo: self-service DV certificates should be permitted for v2 addresses as well as v3, as described above.
+
+## Proposed Implementation
+
+* Trap the failure condition where the certificate chain for a connection to `examplewebsitexx.onion` has been found not to validiate, on the specific grounds that the Certificate Authority Key Identifier cannot be found in the trust root.
+* Check that the certificate is DV
+* Check that the certificate is exclusively citing Subject Alt Names which end in two labels `examplewebsitexx.onion`
+  * Don't just do a simple `strcmp()`, check the label boundaries because subdomains, etc; do it properly 
+* Check that there is no CN in the certificate
+* Check that you are processing a "leaf" certificate, not halfway up a chain of trust.
+* If all conditions are met, ignore this specific failure condition and continue validation processing.
 
 - Alec Muffett, 9 Feb 2019
 
