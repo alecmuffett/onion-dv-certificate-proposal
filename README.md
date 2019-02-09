@@ -62,7 +62,7 @@ This proposal also (currently) leaves open a non-exclusionary role[1] for existi
 * Q: why not self-signed certs?
   * A: Truly "self-signed certificates", suck. Aside from the aspect of "an infinite hell of security popups", there is also the matter that a solution would require "OMG we need to define a standard for a self-signed Onion Cert" and endless bickering; on the other hand, the above proposal is easy to explain and reason about.
 * Q: isn't this the same as self-signed certs?
-  * A: This is close, but not really the same as self-signed certs.  This proposal merely means that you can skip DV chain validation **if** it is not already possible **and** where there is no practicable benefit in doing so (because of the self-authenticating nature of onion addresses, and no risk of HTTP/2 backchannel leaks)
+  * A: This is close, but not really the same as self-signed certs.  This proposal merely means that you can skip DV chain validation **if** it is not already possible **and** where there is no practicable benefit in doing so (because of the self-authenticating nature of onion addresses, and no risk of HTTP/2 circuit-reuse leaks)
 * Q: you're relying on tor to provide a secure channel here, which ends at the egress tor node with its onion address private keys, so your path from that last hop to your httpd should be over localhost
   * A: yes, but you're presuming the implementer's intention, here. This is no more of an risk than a terminate-and-forward TCP/IP load-balancer would be (is) for an EV certificate.
 * Q: Doesn't this mean that the cert will be issued to a network connection, rather than a person?
