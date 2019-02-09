@@ -65,6 +65,8 @@ This proposal also (currently) leaves open a non-exclusionary role[1] for existi
   * A: This is not the same as self-signed certs.  This merely means that you can skip DV chain validation **if** it is not already possible **and** there is no practicable benefit in doing so.
 * Q: you're relying on tor to provide a secure channel here, which ends at the egress tor node with its onion address private keys, so your path from that last hop to your httpd should be over localhost
   * A: yes, but you're presuming the implementer's intention, here. This is no more of an risk than a terminate-and-forward TCP/IP load-balancer would be (is) for an EV certificate.
+* Q: Doesn't this mean that the cert will be issued to a network connection, rather than a person
+  * Basically the same as LetsEncrypt, then.
   
 - Alec Muffett, 8 Feb 2019
 
