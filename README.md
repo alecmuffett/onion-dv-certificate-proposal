@@ -26,7 +26,7 @@ A browser will consider a DV certificate to be valid for connections to this sit
 
 ### Condition 1:
 
-* The connection certificate is a valid DV certificate (eg: such as those created by [Filippo Valsorda's `mkcert`](https://github.com/FiloSottile/mkcert) 
+* The connection certificate is a valid DV certificate (eg: such as those created by [Filippo Valsorda's `mkcert`](https://github.com/FiloSottile/mkcert))
 * **and** the certificate satisfies the standard trust rules for the webpage in question
 * **and** the certificate is signed by a Certificate Authority Key which matches a root certificate that has been manually added to the local trust store
 
