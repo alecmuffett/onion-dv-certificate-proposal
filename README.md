@@ -4,7 +4,7 @@
 
 [Onion sites](https://tools.ietf.org/html/rfc7686) provide self-authenticating network addresses which offer high assurance that a user of "onion networking" is connected to the service - strictly: to the possessor of a cryptographic private key - which they intended.
 
-This degree of assurance in the TCP/IP network stack is provided by certificate authorities who provide various checks prior of issuance of a certificate to a website owner. Depending upon the nature of the end crtificate, some or all of these checks are redundant in the Onion networking space.
+This degree of assurance in the TCP/IP network stack is provided by certificate authorities who provide various checks prior of issuance of a certificate to a website owner. Depending upon the nature of the end certificate, some or all of these checks are redundant in the Onion networking space.
 
 Onion-networking-enabled browsers are capable of delivering most, possibly all, of their streams-based services and user experiences over onion networking; this is evidenced by work at [Facebook](https://www.facebookcorewwwi.onion/) and the [New York Times](https://www.nytimes3xbfgragh.onion/), amongst others. These sites are equipped with EV certificates issued under the terms of [Ballot 144 of the CA/Browser Forum](https://cabforum.org/2015/02/18/ballot-144-validation-rules-dot-onion-names/) which opened up official provision for onion networking.
 
