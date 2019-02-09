@@ -63,7 +63,9 @@ This proposal also (currently) leaves open a non-exclusionary role[1] for existi
   * A: Self-signed certs, suck. Aside from the aspect of "an infinite hell of security popups", there is also the matter that a solution would require "OMG we need to define a standard for a self-signed Onion Cert" and endless bickering; on the other hand, the above is easy to explain.
 * Q: isn't this the same as self-signed certs?
   * A: This is not the same as self-signed certs.  This merely means that you can skip DV chain validation **if** it is not already possible **and** there is no practicable benefit in doing so.
-
+* Q: you're relying on tor to provide a secure channel here, which ends at the egress tor node with its onion address private keys, so your path from that last hop to your httpd should be over localhost
+  * A: yes, but you're presuming the implementer's intention, here. This is no more of an risk than a terminate-and-forward TCP/IP load-balancer would be (is) for an EV certificate.
+  
 - Alec Muffett, 8 Feb 2019
 
 [1] ie: individuals can work around it by careful provision of multiple certificates
