@@ -71,6 +71,8 @@ This proposal also (currently) leaves open a non-exclusionary role[1] for existi
   * Various reasons, not least of which is remaining orthogonal with upstream application expectations; you wouldn't want to connect to an random onion website and have it (via its certificate) offering to provide a HTTP/2 connection back to facebook.com, would you? Unless it was the genuine facebook onion address via Alt-Svc headers, of course...
 * Q: Why do certificate authorities not issue DV certificates for onions?
   * A: many reasons, mostly due to liability: stuff like *"ZOMG v2 onion addresses are 80 bits of truncated SHA1 hash and if an attacker had a few squillions of dollars to spare then they could collide a key... and we (certificate authorities) might get sued for issuing a cert to a collided key."* - which is fair enough. One joy of the self-service approach to Onion DV keys is an "on your own head, be it" approach to liability: it is neither more, nor less, risk than mining and using the address in the first place. See also this essay: https://medium.com/@alecmuffett/onions-certs-browsers-a-three-way-mexican-standoff-7dc987b8ebc8 
+* Q: Can you simply short-cut Condition 1 if you see Condition 2?
+  * A: Nope; because someone might be using Condition 1 in order to test an eventual EV-cert deployment architecture. 
   
 - Alec Muffett, 8 Feb 2019
 
