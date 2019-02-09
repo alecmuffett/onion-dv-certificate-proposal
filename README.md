@@ -47,8 +47,6 @@ A browser will consider a DV certificate to be valid for connections to this sit
 
 **Condition 2** is novel, but conceptually simple: to validate a DV certificate fully for connecting to a given site - including, eg: failing validation if not-before / not-after date boundaries are exceeded - *except* to selectively ignore failure to validate the certificate chain / an inability to resolve the Certificate Authority Key Identifier, in the circumstances that the certificate **could only ever be used to communicate with the given onion address/sitename**. 
 
-The goal of requiring no Common Name is simply to be doubly-certain regarding potential for trust leaks; this may be redundant / pointless / is a matter for consideration.
-
 I believe this proposal addresses the trust requirements of binding onion addresses to TLS certificates, preventing the issues of HTTP/2 connection reuse on the basis of Onion DV-certificates, and provides a self-serve route forwards for individuals to build-out onion services, via use of tools like `mkcert`.
 
 This proposal also (currently) leaves open a non-exclusionary role[1] for existing EV Onion Certificates: for those purposes where more than one Onion address, or a mixture of Onion Addresses and DNS Names, **must** be present in a single certificate; at first consideration this would broadly be in line with the original vision of EV certificates as being "extra validated"
@@ -59,6 +57,8 @@ This proposal also (currently) leaves open a non-exclusionary role[1] for existi
   * A: They're not allowed to, but in any case if someone really wanted one they could buy a "combo" EV certificate which can contain both already
 * Q: Why repeat the "rightmost label" stuff?
   * A: Mostly emphasis / to suggest a "sniff test" for implementers; plus I was vaguely wondering about the converse, viz: whether it was necessary to somehow "ban" `mkcert` users from generating their own "combo" certs, before I realised that it would be foolish, fruitless and unnecessary to do so.
+* Q: Why the CN thing?
+  * A: The goal of requiring no Common Name is simply to be doubly-certain regarding potential for trust leaks; this may be redundant / pointless / is a matter for consideration.
 
 - Alec Muffett, 8 Feb 2019
 
