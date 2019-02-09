@@ -24,7 +24,7 @@ Consider a website with the onion address `examplewebsitexx.onion` offering serv
 
 A browser will consider a DV certificate to be valid for connections to this site, if one of the two following conditions is true:
 
-### Condition 1:
+### Condition 1: (already works)
 
 * The connection certificate is a valid DV certificate (eg: such as those created by [Filippo Valsorda's `mkcert`](https://github.com/FiloSottile/mkcert))
 * **and** the certificate satisfies the standard trust rules for the webpage in question
