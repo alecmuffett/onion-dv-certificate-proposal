@@ -59,6 +59,8 @@ This proposal also (currently) leaves open a non-exclusionary role[1] for existi
   * A: Mostly emphasis / to suggest a "sniff test" for implementers; plus I was vaguely wondering about the converse, viz: whether it was necessary to somehow "ban" `mkcert` users from generating their own "combo" certs, before I realised that it would be foolish, fruitless and unnecessary to do so.
 * Q: Why the CN thing?
   * A: The goal of requiring no Common Name is simply to be doubly-certain regarding potential for trust leaks; this may be redundant / pointless / is a matter for consideration.
+* Q: why not self-signed certs?
+  * Self-signed certs, suck. Aside from the aspect of "an infinite hell of security popups", there is also the matter that a solution would require "OMG we need to define a standard for a self-signed Onion Cert" and endless bickering; on the other hand, the above is easy to explain.
 
 - Alec Muffett, 8 Feb 2019
 
