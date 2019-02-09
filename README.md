@@ -89,11 +89,11 @@ This proposal also (currently) leaves open a non-exclusionary role[1] for existi
 ## Proposed Implementation
 
 * Trap the failure condition where the certificate chain for a connection to `examplewebsitexx.onion` has been found not to validiate, on the specific grounds that the Certificate Authority Key Identifier cannot be found in the trust root.
-* Check that the certificate is DV
-* Check that the certificate is exclusively citing Subject Alt Names which end in two labels `examplewebsitexx.onion`
-  * Don't just do a simple `strcmp()`, check the label boundaries because subdomains, etc; do it properly 
-* Check that there is no CN in the certificate
-* Check that you are processing a "leaf" certificate, not halfway up a chain of trust.
+  * Check that the certificate is DV
+  * Check that the certificate is exclusively citing Subject Alt Names which end in two labels `examplewebsitexx.onion`
+    * Don't just do a simple `strcmp()`, check the label boundaries because subdomains, etc; do it properly 
+  * Check that there is no CN in the certificate
+  * Check that you are processing a "leaf" certificate, not halfway up a chain of trust.
 * If all conditions are met, ignore this specific failure condition and continue validation processing.
 
 - Alec Muffett, 9 Feb 2019
