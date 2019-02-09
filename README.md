@@ -36,7 +36,7 @@ A browser will consider a DV certificate to be valid for connections to this sit
 
 * The connection certificate is a valid DV certificate (eg: `mkcert`, again)
 * **and** the certificate satisfies the standard trust rules for the webpage in question
-* **but** the certificate is signed by a Certificate Authority Key that cannot be resolved in the local trust store
+* **but** the certificate is signed by a Certificate Authority Key that **cannot** be resolved in the local trust store
 * **however** the rightmost label of **all Subject Alt Names in the certificate, without exception**, is `onion`
 * **and** the rightmost two labels of **all Subject Alt Names in the certificate, without exception**, match those of the given onion site (ie: `examplewebsitexx.onion`)
 * **and** no Common Name is supplied on the certificate
