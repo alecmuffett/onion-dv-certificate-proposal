@@ -32,7 +32,7 @@ A browser will consider a DV certificate to be valid for connections to this sit
 
 ...or...
 
-### Condition 2:
+### Condition 2: (to be added)
 
 * The connection certificate is a valid DV certificate (eg: `mkcert`, again)
 * **and** the certificate satisfies the standard trust rules for the webpage in question
