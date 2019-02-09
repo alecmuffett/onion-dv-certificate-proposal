@@ -82,6 +82,6 @@ This proposal also (currently) leaves open a non-exclusionary role[1] for existi
   * So clearly none of the browsers are checking for the presence of this hash in either EV (revoked NYT Cert) or DV (mkcert) certificates. Therefore I would like to have the practical benefit explained to me, please, because I am one of the few people (possibly the only?) on the planet to have ordered EV Onion certificates for two different enterprises, and have not seen this feature achieve anything other than add unnecessary work. 
 
 
-- Alec Muffett, 8 Feb 2019
+- Alec Muffett, 9 Feb 2019
 
 [1] ie: individuals can work around it by careful provision of multiple certificates
