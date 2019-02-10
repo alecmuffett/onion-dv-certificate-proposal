@@ -147,7 +147,7 @@ Traditionally this latter might be a self-signed certificate — because onion a
 
 Hence the above proposal.
 
-Aside from "fetching the certificate over the onion connection, and narrowing its scope to be relevant only to that onion connection" - any other proposition to "bind an onion address to a certificate", such as proposing that the certificate be signed by the private key for the onion, runs into technical challenges:
+Aside from *"fetching the certificate over the onion connection, and narrowing its scope to be relevant only to that onion connection"* - any other proposition to "bind an onion address to a certificate", such as proposing that the certificate be signed by the private key for the onion, runs into technical challenges:
 
 1. what are you going to do with this signature? staple it into the HTTPS protocol somehow? It can't go into the thing that is being signed...
 2. with v2 onions, the address is a truncated hash of the public key, rather than the public key itself; lacking the whole 1023-bit public key inhibits validation
