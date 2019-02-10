@@ -42,6 +42,10 @@ A browser will consider a DV certificate to be valid for connections to this sit
 * **and** no Common Name is supplied on the certificate
 * **and** the certificate is a "leaf" / not used for validating other certs.
 
+## Which browsers would this target?
+
+The goal would be to put this in Firefox as a default-false option, and have TorBrowser and other Tor-aware clients set it to default-true as a matter of choice or design.
+
 ## Rationale
 
 **Condition 1** has been extensively tested by the author, and is simple, obvious, and practically redundant: *it already works*. Extant web browsers do not take any special steps to avoid connections to `.onion` websites, and when connected to the Tor network they are abstracted from the network via a standard `SOCKS5` proxy which also performs name resolution, thereby obviating any DNS concerns.
