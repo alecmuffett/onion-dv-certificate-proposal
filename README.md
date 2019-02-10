@@ -128,15 +128,15 @@ This leaves open three edge cases:
   * This is fine, and may be desirable behaviour for attribution, because the additional checks of EV mitigate the risks of misissuance.
 * What if the user is connecting to a public and untrusted SOCKS5 onion proxy, which is then in a position to forge / rewrite all content, connections, and HTTPS certificates, and present itself as `bar.onion`?
 
-This latter is a real and absolute risk, and (other than via EV certificates) I do not currently see any reasonable way to fix it, but I will point out that untrusted proxies are a deployment architecture actively discouraged by the Tor community. There are services such as [Tor2web](https://www.tor2web.org) which approximate this architecture, but they are somewhat deprecated and loudly proclaimed to be insecure. Quote:
+This latter is a real and absolute risk, and (other than via EV certificates) I do not currently see any reasonable way to fix it, but I will point out that untrusted proxies are a deployment architecture actively discouraged by the Tor community. There are services such as [Tor2web](https://www.tor2web.org) which approximate this architecture, but they are deprecated and loudly proclaimed to be insecure. Quote:
 
 > WARNING: Tor2web only protects publishers, not readers. As a reader installing Tor Browser will give you much greater anonymity, confidentiality, and authentication than using Tor2web. Using Tor2web trades off security for convenience and usability.
 
 The notion of having a solitary tor proxy for your entire home is more plausible, but this collapses to the question of where one draws the line of one's own "security perimeter" and how much one trusts that. The recommended deployment architecture for Tor remains having one daemon per host, and for all the apps on that host to talk to it over loopback.
 
-Above I write "I do not currently see any reasonable way to fix <trust issues regarding connections to an untrusted proxy, by deployment of SSL certificates>" - why is that? 
+Above I write: *I do not currently see any reasonable way to fix <trust issues regarding connections to an untrusted proxy, by deployment of SSL certificates>* - why is that?  Because if SSL certificates are to resolve trust issues over an untrusted network (eg: *the internet*; or, equally, *accessing onion networks over an untrusted proxy*) then the only way to resolve this is by reference to a trust root that is already established in the browser. 
 
-Because if SSL certificates are to resolve trust issues over an untrusted network (eg: the internet; or, accessing onion networks over an untrusted proxy) then the only way to resolve this is by reference to a trust root that is already established in the browser. We already have a mechanism for this: the EV Onion Certificate.
+We already have a mechanism for this: the EV Onion Certificate.
 
 However: the whole point of this proposal is to enable a DV-like Onion Certificate which would complement the self-service nature of Onion Networking.  People create their own onion addresses and use them without requiring the intercession of a third party, and therefore they should be provided with some manner of HTTPS certificate which can also function without the intercession of a third party. 
 
@@ -146,6 +146,13 @@ Traditionally this latter might be a self-signed certificate — because onion a
 2. amend the DV validation rules in a sympathetic way
 
 Hence the above proposal.
+
+Aside from "fetching the certificate over the onion connection, and narrowing its scope to be relevant only to that onion connection" - any other proposition to "bind an onion address to a certificate", such as proposing that the certificate be signed by the private key for the onion, runs into technical challenges:
+
+1. what are you going to do with this signature? staple it into the HTTPS protocol somehow? It can't go into the thing that is being signed...
+2. with v2 onions, the address is a truncated hash of the public key, rather than the public key itself; lacking the whole 1023-bit public key inhibits validation
+
+In particular: v2 onions are due to be deprecated, but given the above ("source of truth", q.v.) and that no certificate authority exists to be sued for misissuance in a self-service DV onion scenario, I see no reason to exclude them from HTTPS protection.
 
 - Alec Muffett, 10 Feb 2019
 
