@@ -88,19 +88,66 @@ This proposal also (currently) leaves open a non-exclusionary role[1] for existi
   * A: many reasons, mostly due to liability: stuff like *"ZOMG v2 onion addresses are 80 bits of truncated SHA1 hash and if an attacker had a few squillions of dollars to spare then they could collide a key... and we (certificate authorities) might get sued for issuing a cert to a collided key."* - which is fair enough. One joy of the self-service approach to Onion DV keys is an "on your own head, be it" approach to liability: it is neither more, nor less, risk than mining and using the address in the first place. See also this essay: https://medium.com/@alecmuffett/onions-certs-browsers-a-three-way-mexican-standoff-7dc987b8ebc8 
 * Q: Can you simply short-cut Condition 1 if you see Condition 2?
   * A: Nope; because someone might be using Condition 1 in order to test an eventual EV-cert deployment architecture, including mixed Onion-and-DNS-Addresses amongst the SANs, which Condition 2 would forbid.
-* Q: The **EV** Onion Certificate mechanism [takes additional steps to embed a hash of the Onion public key](https://cabforum.org/pipermail/public/2017-April/010706.html) into the certificate, but you don't mention this here; this surely means that the TLS certificate is not bound to a corresponding specific private key, and allows anyone to impersonate any Onion site?
-  * A: I have never understood how this line of thought was meant to work - how does one "impersonate an onion site"? By definition an onion site someone who possesses a key which they can register with the Tor network - the private key of the Onion address *is* Tor's defacto network address, and anyone with the private key can represent themselves as that Onion address *on* the Tor network, and they *will* receive traffic for that network address.
-  * In this sense, the above is an a risk that can **only** be defended against by site-owner vigilance / stopping the site's private onion key from being leaked, because if the latter does leak then it's a game-over" situation; there is no "putting the back in the bottle" as there would be in the cleartext internet where a (stale?) DNS domain is hijacked, its addresses redirected, and a LetsEncrypt DV certificate is issued for the hijacker's machines. There is no "recall" for the loss of an onion private key - but then in my above specification there is no CA to be spanked for misissuance, either.
-  * The whole point of Onion Addresses is that they are self-service, and therefore it makes sense that DV TLS certificates for them should also be self-service, and binding the one to the other can be achieved by simple string comparison.
-  * Embedding a hash the onion key was a last minute thought in the EV Onion Certificate specification - one which I literally never understood from the outset, and which both has greatly complicated the issuance of EV onion certs with new tooling, for no practical benefit
-  * I believe that it was failure to embed a proper hash [(SEE IMAGE)](revoked-onions.png) that led to the [revocation of one NYT certificate](https://crt.sh/?id=240277340) and its [rapid replacement by another](https://crt.sh/?id=241547157) - so this extra hash adds bureaucratic load, possibility for error, and therefore cost; but I *did* install that certificate in the NYT for 24 hours, and it *did* work; and also I have spent several days now, working with `mkcert` and rolling perfectly ordinary DV certificates for Onion sites.
-  * So I believe that none of the browsers are validating the presence of this hash in either EV (revoked NYT Cert) or DV (mkcert) certificates. I would like to have the practical benefit of embedding this information into a **DV** certificate explained to me, please, because I am one of the few people (possibly the only?) on the planet to have ordered EV Onion certificates for two different enterprises, and yet have not seen this feature achieve anything other than add unnecessary work, nor offer any value other than for the trust necessary for a CA to deliver the **EV** certificate process.
-* Q: but at risk of repeating: surely, without embedding the public key, there is no binding between the certificate and the corresponding onion keypair?
-  * A: With v3 onion addresses, the onion address string is *literally* the entire public key; therefore the public key will be embedded, probably several times over, in the SubjectAltNames of the certificate; string comparison of the rightmost two labels will guarantee the binding, and the additional "cabf-TorServiceDescriptorHash" is unnecessary.
-  * With v2 addresses, the onion address string is a 80-bit truncated SHA-1 hash of the public key; again string comparison of the rightmost two labels can provide the binding, but the question is whether a truncated hash is "sufficient" binding. The answer is yes, because the Tor network **itself** will accept as legitimate any public key which can match this hash, and will send traffic to it. Tor's behaviour is the "source of truth" in this matter, not the contents of the certificate.
-  * Because in *any* self-service DV scenario, an attacker will be able to roll their own TLS certificate for this impostor key (because otherwise it would not be "self-service") then there is no additional risk, nor any certificate authority to bear it. Ergo: self-service DV certificates should be permitted for v2 addresses as well as v3, as described above.
+  
+## Discussion: On "binding" Onion Addresses with SSL Certificates
+  
+The **EV** Onion Certificate mechanism [takes additional steps to embed a hash of the Onion public key](https://cabforum.org/pipermail/public/2017-April/010706.html) into the certificate; this was a last minute thought in the EV Onion Certificate specification, meant as some guarantee against "impersonating an onion site".   
 
-- Alec Muffett, 9 Feb 2019
+I did not understand this choice from the outset, and in practice it has greatly complicated the issuance of EV onion certs with a demand for new and specialised tooling and process, to no apparent practical benefit. 
+
+It was failure to embed a proper hash [(SEE IMAGE)](revoked-onions.png) which led to the [revocation of one NYT certificate](https://crt.sh/?id=240277340) and its [rapid replacement by another](https://crt.sh/?id=241547157) - so this requirement for an extra hash adds bureaucratic load, and possibility for error, and therefore adds cost; however I *did* install that certificate in the NYT for 24 hours, and it *did* work, so apparently no browser is checking this information.
+
+Further: how does one "impersonate an onion site"? On reflection there might be some edge cases where that's a risk, but this is my take on it:
+
+By definition an onion site someone who possesses a public key (and the corresponding private one) which they can register with the Tor network; the public key of the Onion address *is* Tor's defacto network address, and anyone with the corresponding private key can represent themselves as that Onion address *upon* the Tor network, and they *will* receive traffic for that network address.  
+
+Unlike in the cleartext internet, **Tor's layer-3 behaviour is the source of truth** regarding network endpoint identity, rather than the contents of a HTTPS certificate which is supported by the infrastructures of IP-hosting, DNS-hosting, Certificate Authorities, and ISP behaviour. There is an absolute binding between (say) `facebookcorewwwi.onion` and Facebook, without reference to third parties.
+
+### Mapping a Certificate to an Onion Address
+
+If we are given a HTTPS certificate for an onion address, how do we know which Onion Public Key it is referring to? 
+
+Simple: we look at the ("DNSName") onion addresses that are stored in the SubjectAltNames field: 
+
+  * With v3 onion addresses, the onion address string is *literally* the entire public key; therefore the public key will be embedded, probably several times over, in the SubjectAltNames of the certificate; string comparison of the rightmost two labels will guarantee the binding, and the additional "cabf-TorServiceDescriptorHash" is unnecessary.
+  * With v2 addresses, the onion address string is a 80-bit truncated SHA-1 hash of the public key; again string comparison of the rightmost two labels can provide the binding, but the question is whether a truncated hash is "sufficient" binding. The answer is yes, because the Tor network **itself** will accept as legitimate any public key which can match this hash, and will send traffic to it. (See "source of truth", above)
+
+In the circumstances that an onion-address private/public keypair is leaked (irrespective of v2 or v3) then it is a "game-over" situation; there is absolutely no "putting the genie back in the bottle" as there might be on the cleartext internet where a (stale?) DNS domain is hijacked, its addresses redirected, and a LetsEncrypt DV certificate is issued for the hijacker's machines. 
+
+### Mapping (in reverse) an Onion Address to a Certificate
+
+If we are given an Onion Public Key / Address, how do we know what is the HTTPS Certificate for that connection?
+
+Simple: we connect to the onion address, and we retrieve the certificate.  The layer-3 connection is defacto authenticated to a level which is similar to HTTPS, so any HTTPS certificate which we receive over such a connection can be assumed to be genuine. It is "true" because we received it over that link.
+
+This leaves open three edge cases:
+
+* What if - when connecting to a third party like `foo.com` - we receive a **DV certificate** which cites both `foo.com` and `bar.onion`, in the hope of stealing Onion traffic by means of redirecting it to `foo.com` because of `Alt-Svc` headers?
+  * This cannot happen, because Certificate Authorities are forbidden from issuing DV certificates which contain onion addresses.
+* What if - when connecting to a third party like `foo.com` - we receive a **EV certificate**  which cites both `foo.com` and `bar.onion`?
+  * This is fine, and may be desirable behaviour for attribution, because the additional checks of EV mitigate the risks of misissuance.
+* What if the user is connecting to a public and untrusted SOCKS5 onion proxy, which is then in a position to forge / rewrite all content, connections, and HTTPS certificates, and present itself as `bar.onion`?
+
+This latter is a real and absolute risk, and (other than via EV certificates) I do not currently see any reasonable way to fix it, but I will point out that untrusted proxies are a deployment architecture actively discouraged by the Tor community. There are services such as [Tor2web](https://www.tor2web.org) which approximate this architecture, but they are somewhat deprecated and loudly proclaimed to be insecure. Quote:
+
+> WARNING: Tor2web only protects publishers, not readers. As a reader installing Tor Browser will give you much greater anonymity, confidentiality, and authentication than using Tor2web. Using Tor2web trades off security for convenience and usability.
+
+The notion of having a solitary tor proxy for your entire home is more plausible, but this collapses to the question of where one draws the line of one's own "security perimeter" and how much one trusts that. The recommended deployment architecture for Tor remains having one daemon per host, and for all the apps on that host to talk to it over loopback.
+
+Above I write "I do not currently see any reasonable way to fix <trust issues regarding connections to an untrusted proxy, by deployment of SSL certificates>" - why is that? 
+
+Because if SSL certificates are to resolve trust issues over an untrusted network (eg: the internet; or, accessing onion networks over an untrusted proxy) then the only way to resolve this is by reference to a trust root that is already established in the browser. We already have a mechanism for this: the EV Onion Certificate.
+
+However: the whole point of this proposal is to enable a DV-like Onion Certificate which would complement the self-service nature of Onion Networking.  People create their own onion addresses and use them without requiring the intercession of a third party, and therefore they should be provided with some manner of HTTPS certificate which can also function without the intercession of a third party. 
+
+Traditionally this latter might be a self-signed certificate — because onion addresses are equally self-signed — but rather than create a whole new certificate specification, instead it seems more efficient to simply either:
+
+1. steal the DV specification and then amend it to add "don't act as a CA, and plz ignore the certificate chain", or
+2. amend the DV validation rules in a sympathetic way
+
+Hence the above proposal.
+
+- Alec Muffett, 10 Feb 2019
 
 [1] ie: individuals can work around it by careful provision of multiple certificates
 
