@@ -1,3 +1,7 @@
+## Coverage:
+
+* https://portswigger.net/daily-swig/how-tor-can-enable-verification-with-dv-certs
+
 # A simple proposal to provide DV certificates to Onion Sites
 
 ## Outline
