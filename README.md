@@ -1,4 +1,4 @@
-## Coverage:
+## Press Coverage
 
 * https://portswigger.net/daily-swig/how-tor-can-enable-verification-with-dv-certs
 
