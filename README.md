@@ -2,7 +2,9 @@
 
 * https://portswigger.net/daily-swig/how-tor-can-enable-verification-with-dv-certs
 
-# A simple proposal to provide DV certificates to Onion Sites
+# SOOC: Same-Origin Onion Certificate validity checks for DV TLS
+
+**A simple proposal to provide DV TLS certificates to Onion Sites**
 
 ## Outline
 
