@@ -1,0 +1,224 @@
+
+
+
+
+Network Working Group                                         A. Muffett
+Internet-Draft                                               Independent
+Intended status: Informational                             7 August 2019
+Expires: 8 February 2020
+
+
+                     Same Origin Onion Certificates
+
+Abstract
+
+   Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+   eiusmod tempor incididunt ut labore et dolore magna aliqua.  Ut enim
+   ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
+   aliquip ex ea commodo consequat.  Duis aute irure dolor in
+   reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
+   pariatur.  Excepteur sint occaecat cupidatat non proident, sunt in
+   culpa qui officia deserunt mollit anim id est laborum.
+
+Status of This Memo
+
+   This Internet-Draft is submitted in full conformance with the
+   provisions of BCP 78 and BCP 79.
+
+   Internet-Drafts are working documents of the Internet Engineering
+   Task Force (IETF).  Note that other groups may also distribute
+   working documents as Internet-Drafts.  The list of current Internet-
+   Drafts is at https://datatracker.ietf.org/drafts/current/.
+
+   Internet-Drafts are draft documents valid for a maximum of six months
+   and may be updated, replaced, or obsoleted by other documents at any
+   time.  It is inappropriate to use Internet-Drafts as reference
+   material or to cite them other than as "work in progress."
+
+   This Internet-Draft will expire on 8 February 2020.
+
+Copyright Notice
+
+   Copyright (c) 2019 IETF Trust and the persons identified as the
+   document authors.  All rights reserved.
+
+   This document is subject to BCP 78 and the IETF Trust's Legal
+   Provisions Relating to IETF Documents (https://trustee.ietf.org/
+   license-info) in effect on the date of publication of this document.
+   Please review these documents carefully, as they describe your rights
+   and restrictions with respect to this document.  Code Components
+   extracted from this document must include Simplified BSD License text
+   as described in Section 4.e of the Trust Legal Provisions and are
+   provided without warranty as described in the Simplified BSD License.
+
+
+
+Muffett                  Expires 8 February 2020                [Page 1]
+
+Internet-Draft                    sooc                       August 2019
+
+
+Table of Contents
+
+   1.  Introduction  . . . . . . . . . . . . . . . . . . . . . . . .   2
+     1.1.  Terminology . . . . . . . . . . . . . . . . . . . . . . .   2
+   2.  SOOC Use Cases  . . . . . . . . . . . . . . . . . . . . . . .   2
+   3.  SOOC Technical Definition . . . . . . . . . . . . . . . . . .   3
+   4.  SOOC In Context . . . . . . . . . . . . . . . . . . . . . . .   3
+     4.1.  SOOC intended to complement, not replace, EV & DV . . . .   3
+     4.2.  SOOC compared to EV Certificates  . . . . . . . . . . . .   3
+     4.3.  SOOC compared to DV Certificates  . . . . . . . . . . . .   4
+     4.4.  SOOC compared to LetsEncrypt  . . . . . . . . . . . . . .   4
+
+1.  Introduction
+
+   Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+   eiusmod tempor incididunt ut labore et dolore magna aliqua.  Ut enim
+   ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
+   aliquip ex ea commodo consequat.  Duis aute irure dolor in
+   reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
+   pariatur.  Excepteur sint occaecat cupidatat non proident, sunt in
+   culpa qui officia deserunt mollit anim id est laborum.
+
+1.1.  Terminology
+
+   Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+   eiusmod tempor incididunt ut labore et dolore magna aliqua.  Ut enim
+   ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
+   aliquip ex ea commodo consequat.  Duis aute irure dolor in
+   reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
+   pariatur.  Excepteur sint occaecat cupidatat non proident, sunt in
+   culpa qui officia deserunt mollit anim id est laborum.
+
+2.  SOOC Use Cases
+
+   Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+   eiusmod tempor incididunt ut labore et dolore magna aliqua.  Ut enim
+   ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
+   aliquip ex ea commodo consequat.  Duis aute irure dolor in
+   reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
+   pariatur.  Excepteur sint occaecat cupidatat non proident, sunt in
+   culpa qui officia deserunt mollit anim id est laborum.
+
+
+
+
+
+
+
+
+
+
+Muffett                  Expires 8 February 2020                [Page 2]
+
+Internet-Draft                    sooc                       August 2019
+
+
+3.  SOOC Technical Definition
+
+   Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+   eiusmod tempor incididunt ut labore et dolore magna aliqua.  Ut enim
+   ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
+   aliquip ex ea commodo consequat.  Duis aute irure dolor in
+   reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
+   pariatur.  Excepteur sint occaecat cupidatat non proident, sunt in
+   culpa qui officia deserunt mollit anim id est laborum.
+
+4.  SOOC In Context
+
+   Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+   eiusmod tempor incididunt ut labore et dolore magna aliqua.  Ut enim
+   ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
+   aliquip ex ea commodo consequat.  Duis aute irure dolor in
+   reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
+   pariatur.  Excepteur sint occaecat cupidatat non proident, sunt in
+   culpa qui officia deserunt mollit anim id est laborum.
+
+4.1.  SOOC intended to complement, not replace, EV & DV
+
+   Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+   eiusmod tempor incididunt ut labore et dolore magna aliqua.  Ut enim
+   ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
+   aliquip ex ea commodo consequat.  Duis aute irure dolor in
+   reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
+   pariatur.  Excepteur sint occaecat cupidatat non proident, sunt in
+   culpa qui officia deserunt mollit anim id est laborum.
+
+4.2.  SOOC compared to EV Certificates
+
+   Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+   eiusmod tempor incididunt ut labore et dolore magna aliqua.  Ut enim
+   ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
+   aliquip ex ea commodo consequat.  Duis aute irure dolor in
+   reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
+   pariatur.  Excepteur sint occaecat cupidatat non proident, sunt in
+   culpa qui officia deserunt mollit anim id est laborum.
+
+
+
+
+
+
+
+
+
+
+
+
+Muffett                  Expires 8 February 2020                [Page 3]
+
+Internet-Draft                    sooc                       August 2019
+
+
+4.3.  SOOC compared to DV Certificates
+
+   Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+   eiusmod tempor incididunt ut labore et dolore magna aliqua.  Ut enim
+   ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
+   aliquip ex ea commodo consequat.  Duis aute irure dolor in
+   reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
+   pariatur.  Excepteur sint occaecat cupidatat non proident, sunt in
+   culpa qui officia deserunt mollit anim id est laborum.
+
+4.4.  SOOC compared to LetsEncrypt
+
+   Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+   eiusmod tempor incididunt ut labore et dolore magna aliqua.  Ut enim
+   ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
+   aliquip ex ea commodo consequat.  Duis aute irure dolor in
+   reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
+   pariatur.  Excepteur sint occaecat cupidatat non proident, sunt in
+   culpa qui officia deserunt mollit anim id est laborum.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Muffett                  Expires 8 February 2020                [Page 4]
