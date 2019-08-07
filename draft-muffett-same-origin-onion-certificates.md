@@ -5,7 +5,7 @@ category = "info"
 docName = "apparently it demands a doc name but does not use it"
 ipr ="trust200902"
 area = "Internet"
-workgroup = "Network Working Group"
+workgroup = "Transport Layer Security"
 keyword = ["tor", "onion", "tls", "ssl"]
 
 [seriesInfo]
