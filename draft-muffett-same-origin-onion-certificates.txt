@@ -69,6 +69,7 @@ Table of Contents
      4.2.  SOOC compared to EV Certificates  . . . . . . . . . . . .   3
      4.3.  SOOC compared to DV Certificates  . . . . . . . . . . . .   4
      4.4.  SOOC compared to LetsEncrypt  . . . . . . . . . . . . . .   4
+   Author's Address  . . . . . . . . . . . . . . . . . . . . . . . .   4
 
 1.  Introduction
 
@@ -99,7 +100,6 @@ Table of Contents
    reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
    pariatur.  Excepteur sint occaecat cupidatat non proident, sunt in
    culpa qui officia deserunt mollit anim id est laborum.
-
 
 
 
@@ -190,12 +190,12 @@ Internet-Draft                    sooc                       August 2019
    pariatur.  Excepteur sint occaecat cupidatat non proident, sunt in
    culpa qui officia deserunt mollit anim id est laborum.
 
+Author's Address
 
+   Alec Muffett
+   Independent
 
-
-
-
-
+   Email: alec.muffett@gmail.com
 
 
 

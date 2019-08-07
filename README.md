@@ -10,3 +10,4 @@
 ## Notes
 
 * [markdown syntax](https://mmark.miek.nl/post/syntax/)
+* [writing-internet-drafts-in-markdown](https://github.com/danyork/writing-internet-drafts-in-markdown/tree/master/example-mmark)
