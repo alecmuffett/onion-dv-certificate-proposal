@@ -16,6 +16,7 @@
 <keyword>ssl</keyword>
 
 <abstract>
+<t>WORK IN PROGRESS - SEPTEMBER 2019</t>
 <t>Onion networking <xref target="RFC7686"></xref> offers technical features which obviate
 many of the risks upon which led to the development of our modern
 Certificate Authority Public Key Infrastructure; as an increasingly

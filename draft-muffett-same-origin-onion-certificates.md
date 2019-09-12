@@ -25,6 +25,8 @@ organization = "Independent"
 
 .# Abstract
 
+WORK IN PROGRESS - SEPTEMBER 2019
+
 Onion networking [@RFC7686] offers technical features which obviate
 many of the risks upon which led to the development of our modern
 Certificate Authority Public Key Infrastructure; as an increasingly

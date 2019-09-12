@@ -13,6 +13,8 @@ Expires: 15 March 2020
 
 Abstract
 
+   WORK IN PROGRESS - SEPTEMBER 2019
+
    Onion networking [RFC7686] offers technical features which obviate
    many of the risks upon which led to the development of our modern
    Certificate Authority Public Key Infrastructure; as an increasingly
@@ -45,10 +47,8 @@ Status of This Memo
 
    This Internet-Draft will expire on 15 March 2020.
 
-Copyright Notice
 
-   Copyright (c) 2019 IETF Trust and the persons identified as the
-   document authors.  All rights reserved.
+
 
 
 
@@ -57,6 +57,11 @@ Muffett                   Expires 15 March 2020                 [Page 1]
 
 Internet-Draft                    sooc                    September 2019
 
+
+Copyright Notice
+
+   Copyright (c) 2019 IETF Trust and the persons identified as the
+   document authors.  All rights reserved.
 
    This document is subject to BCP 78 and the IETF Trust's Legal
    Provisions Relating to IETF Documents (https://trustee.ietf.org/
@@ -71,13 +76,13 @@ Table of Contents
 
    1.  Introduction  . . . . . . . . . . . . . . . . . . . . . . . .   2
      1.1.  Onion Networking compared to TLS PKI  . . . . . . . . . .   3
-   2.  SOOC In Context . . . . . . . . . . . . . . . . . . . . . . .   4
+   2.  SOOC In Context . . . . . . . . . . . . . . . . . . . . . . .   5
    3.  SOOC Conditions and Technical Definition  . . . . . . . . . .   5
    4.  SOOC Use Cases  . . . . . . . . . . . . . . . . . . . . . . .   5
      4.1.  SOOC to complement, not replace, EV (and perhaps
            DV) . . . . . . . . . . . . . . . . . . . . . . . . . . .   5
-     4.2.  SOOC and EV Certificates  . . . . . . . . . . . . . . . .   5
-     4.3.  SOOC and DV Certificates  . . . . . . . . . . . . . . . .   5
+     4.2.  SOOC and EV Certificates  . . . . . . . . . . . . . . . .   6
+     4.3.  SOOC and DV Certificates  . . . . . . . . . . . . . . . .   6
      4.4.  SOOC and LetsEncrypt  . . . . . . . . . . . . . . . . . .   6
      4.5.  SOOC and HSTS . . . . . . . . . . . . . . . . . . . . . .   6
      4.6.  SOOC and Certificate Transparency . . . . . . . . . . . .   6
@@ -100,11 +105,6 @@ Table of Contents
 
    The PKI mechanism has evolved to provide such identity assurance in a
    heavily-layered network environment which lacks overarching trust
-   mechanisms and which is riven with potential for attack at (or:
-   across) different layers.
-
-   For instance:
-
 
 
 
@@ -113,6 +113,11 @@ Muffett                   Expires 15 March 2020                 [Page 2]
 
 Internet-Draft                    sooc                    September 2019
 
+
+   mechanisms and which is riven with potential for attack at (or:
+   across) different layers.
+
+   For instance:
 
    *  ARP: first-hop, last-hop, or indeed any other hop may be hijacked
       with spoofed layer-2 address resolution; indeed some firewall
@@ -158,17 +163,17 @@ Internet-Draft                    sooc                    September 2019
    public keys which sign all data that pertains to communication with
    that address.
 
-   Like most cryptographic keys, onion addresses appear essentially to
-   be strings of random bits, although it's possible via "mining" to
-   eventually generate one which appears meaningful to human beings, eg:
-   "facebookcorewwwi.onion"
-
 
 
 Muffett                   Expires 15 March 2020                 [Page 3]
 
 Internet-Draft                    sooc                    September 2019
 
+
+   Like most cryptographic keys, onion addresses appear essentially to
+   be strings of random bits, although it's possible via "mining" to
+   eventually generate one which appears meaningful to human beings, eg:
+   "facebookcorewwwi.onion"
 
    For purposes of PKI, the most interesting aspect of onion addresses
    is their textual representation; unlike IPv4's "dotted quads" or
@@ -210,6 +215,17 @@ Internet-Draft                    sooc                    September 2019
    *  All other connectivity redirections or "hijacks" are inhibited by
       the Tor network stack.
 
+
+
+
+
+
+
+Muffett                   Expires 15 March 2020                 [Page 4]
+
+Internet-Draft                    sooc                    September 2019
+
+
 2.  SOOC In Context
 
    As described above, the security characteristics and protections of
@@ -218,13 +234,6 @@ Internet-Draft                    sooc                    September 2019
 
    However: the encoding of onion addresses explicitly solves this
    problem:
-
-
-
-Muffett                   Expires 15 March 2020                 [Page 4]
-
-Internet-Draft                    sooc                    September 2019
-
 
    *  The connection MUST be an onion connection, because it was made
       using Tor-capable software, and because the ".onion" Special Use
@@ -265,15 +274,6 @@ Internet-Draft                    sooc                    September 2019
 
    TODO
 
-4.2.  SOOC and EV Certificates
-
-   TODO
-
-4.3.  SOOC and DV Certificates
-
-   TODO
-
-
 
 
 
@@ -281,6 +281,14 @@ Muffett                   Expires 15 March 2020                 [Page 5]
 
 Internet-Draft                    sooc                    September 2019
 
+
+4.2.  SOOC and EV Certificates
+
+   TODO
+
+4.3.  SOOC and DV Certificates
+
+   TODO
 
 4.4.  SOOC and LetsEncrypt
 
@@ -322,6 +330,14 @@ Internet-Draft                    sooc                    September 2019
 
 Author's Address
 
+
+
+
+Muffett                   Expires 15 March 2020                 [Page 6]
+
+Internet-Draft                    sooc                    September 2019
+
+
    Alec Muffett
    Independent
 
@@ -333,4 +349,44 @@ Author's Address
 
 
 
-Muffett                   Expires 15 March 2020                 [Page 6]
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Muffett                   Expires 15 March 2020                 [Page 7]
