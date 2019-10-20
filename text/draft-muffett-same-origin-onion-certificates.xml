@@ -290,6 +290,7 @@ without the extension (compare <eref target="https://crt.sh/?id=240277340">https
 yet, especially as it is within the power of the service provider to
 mitigate in alternative ways, and in any case we may still evolve
 towards SOOC-EV as the the technology matures.</t>
+</section>
 
 <section anchor="reciprocal-attack-shared-tor-gateways"><name>Reciprocal Attack: Shared Tor Gateways?</name>
 <t>Having comprehended the above, there is also obviously a reciprocal
@@ -307,7 +308,6 @@ experimentally, the overwhelming means by which people access Tor is
 by using a local client over localhost, one (or more) per user. At the
 &quot;client&quot; end, access to the Tor proxy is within the local trust
 boundary, where worse things can happen.</t>
-</section>
 </section>
 </section>
 </section>

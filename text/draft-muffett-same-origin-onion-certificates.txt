@@ -88,6 +88,7 @@ Table of Contents
      4.6.  SOOC and Certificate Transparency . . . . . . . . . . . .   6
      4.7.  SOOC edge-cases, and "SOOC-EV"  . . . . . . . . . . . . .   6
        4.7.1.  Advanced Mitigations: SOOC-EV . . . . . . . . . . . .   7
+       4.7.2.  Reciprocal Attack: Shared Tor Gateways? . . . . . . .   8
    5.  Linkfarm TBD  . . . . . . . . . . . . . . . . . . . . . . . .   9
    6.  Informative References  . . . . . . . . . . . . . . . . . . .   9
    Author's Address  . . . . . . . . . . . . . . . . . . . . . . . .   9
@@ -104,7 +105,6 @@ Table of Contents
    content is one that would commonly be accepted as being capable,
    permitted and expected to serve content which people who own the
    "www.example.com" intentionally supply.
-
 
 
 
@@ -424,7 +424,7 @@ Internet-Draft                    sooc                      October 2019
    mitigate in alternative ways, and in any case we may still evolve
    towards SOOC-EV as the the technology matures.
 
-4.7.1.1.  Reciprocal Attack: Shared Tor Gateways?
+4.7.2.  Reciprocal Attack: Shared Tor Gateways?
 
    Having comprehended the above, there is also obviously a reciprocal
    risk which can be stated:

@@ -268,7 +268,7 @@ As such, I don't believe that this attack is worthy of consideration yet, especi
 the power of the service provider to mitigate in alternative ways, and in any case we may still
 evolve towards SOOC-EV as the the technology matures.
 
-#### Reciprocal Attack: Shared Tor Gateways?
+### Reciprocal Attack: Shared Tor Gateways?
 
 Having comprehended the above, there is also obviously a reciprocal risk which can be stated:
 
