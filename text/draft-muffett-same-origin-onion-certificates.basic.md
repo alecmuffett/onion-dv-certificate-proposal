@@ -186,7 +186,7 @@ TODO
 
 TODO
 
-## SOOC edge-cases, and "SOOC-EV"
+# SOOC Edge-Cases, and "SOOC-EV"
 
 It is necessary to recognise that there is one "weak" spot in the assertion that string comparison
 is sufficient to prove the binding between an Onion Address and a SSL Certificate Subject Alt-Name,
@@ -213,7 +213,7 @@ at Facebook; and if the Facebook devops team are at risk of someone interposing 
 server certificate into their infrastructure, then they have bigger problems than mere onion service
 impersonation.
 
-### Advanced Mitigations: SOOC-EV
+## Advanced Mitigations: SOOC-EV
 
 Generally at this point, enthusiastic cryptographers will point at Version 3 Onion Addresses and
 note that they are actual public keys, and "couldn't they just sign the SOOC Certificate, and the
@@ -268,7 +268,12 @@ As such, I don't believe that this attack is worthy of consideration yet, especi
 the power of the service provider to mitigate in alternative ways, and in any case we may still
 evolve towards SOOC-EV as the the technology matures.
 
-### Reciprocal Attack: Shared Tor Gateways?
+To be clear: I believe that SOOC-EV should probably be done. I also firmly do not believe that it
+is a pre-requisite, nor is it necessary to do it "now" or to block SOOC until it is done. Apart from
+the reasons above, there is likely still some need for V3 Onion Addresses to mature in deployments
+for one or two years.
+
+## Reciprocal Attack: Shared Tor Gateways?
 
 Having comprehended the above, there is also obviously a reciprocal risk which can be stated:
 

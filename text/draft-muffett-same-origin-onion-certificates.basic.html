@@ -199,7 +199,7 @@ chain checks that might otherwise be required to validate identity.</p>
 
 <p>TODO</p>
 
-<h2 id="sooc-edge-cases-and-sooc-ev">SOOC edge-cases, and &ldquo;SOOC-EV&rdquo;</h2>
+<h1 id="sooc-edge-cases-and-sooc-ev">SOOC Edge-Cases, and &ldquo;SOOC-EV&rdquo;</h1>
 
 <p>It is necessary to recognise that there is one &ldquo;weak&rdquo; spot in the
 assertion that string comparison is sufficient to prove the binding
@@ -233,7 +233,7 @@ team are at risk of someone interposing a fake server and server
 certificate into their infrastructure, then they have bigger problems
 than mere onion service impersonation.</p>
 
-<h3 id="advanced-mitigations-sooc-ev">Advanced Mitigations: SOOC-EV</h3>
+<h2 id="advanced-mitigations-sooc-ev">Advanced Mitigations: SOOC-EV</h2>
 
 <p>Generally at this point, enthusiastic cryptographers will point at
 Version 3 Onion Addresses and note that they are actual public keys,
@@ -302,7 +302,13 @@ yet, especially as it is within the power of the service provider to
 mitigate in alternative ways, and in any case we may still evolve
 towards SOOC-EV as the the technology matures.</p>
 
-<h3 id="reciprocal-attack-shared-tor-gateways">Reciprocal Attack: Shared Tor Gateways?</h3>
+<p>To be clear: I believe that SOOC-EV should probably be done.  I also
+firmly do not believe that it is a pre-requisite, nor is it necessary
+to do it &ldquo;now&rdquo; or to block SOOC until it is done.  Apart from the
+reasons above, there is likely still some need for V3 Onion Addresses
+to mature in deployments for one or two years.</p>
+
+<h2 id="reciprocal-attack-shared-tor-gateways">Reciprocal Attack: Shared Tor Gateways?</h2>
 
 <p>Having comprehended the above, there is also obviously a reciprocal
 risk which can be stated:</p>

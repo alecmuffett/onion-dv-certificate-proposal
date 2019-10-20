@@ -86,11 +86,11 @@ Table of Contents
      4.4.  SOOC and LetsEncrypt  . . . . . . . . . . . . . . . . . .   6
      4.5.  SOOC and HSTS . . . . . . . . . . . . . . . . . . . . . .   6
      4.6.  SOOC and Certificate Transparency . . . . . . . . . . . .   6
-     4.7.  SOOC edge-cases, and "SOOC-EV"  . . . . . . . . . . . . .   6
-       4.7.1.  Advanced Mitigations: SOOC-EV . . . . . . . . . . . .   7
-       4.7.2.  Reciprocal Attack: Shared Tor Gateways? . . . . . . .   8
-   5.  Linkfarm TBD  . . . . . . . . . . . . . . . . . . . . . . . .   9
-   6.  Informative References  . . . . . . . . . . . . . . . . . . .   9
+   5.  SOOC Edge-Cases, and "SOOC-EV"  . . . . . . . . . . . . . . .   6
+     5.1.  Advanced Mitigations: SOOC-EV . . . . . . . . . . . . . .   7
+     5.2.  Reciprocal Attack: Shared Tor Gateways? . . . . . . . . .   8
+   6.  Linkfarm TBD  . . . . . . . . . . . . . . . . . . . . . . . .   9
+   7.  Informative References  . . . . . . . . . . . . . . . . . . .   9
    Author's Address  . . . . . . . . . . . . . . . . . . . . . . . .   9
 
 1.  Introduction
@@ -302,7 +302,7 @@ Internet-Draft                    sooc                      October 2019
 
    TODO
 
-4.7.  SOOC edge-cases, and "SOOC-EV"
+5.  SOOC Edge-Cases, and "SOOC-EV"
 
    It is necessary to recognise that there is one "weak" spot in the
    assertion that string comparison is sufficient to prove the binding
@@ -344,7 +344,7 @@ Internet-Draft                    sooc                      October 2019
    server certificate into their infrastructure, then they have bigger
    problems than mere onion service impersonation.
 
-4.7.1.  Advanced Mitigations: SOOC-EV
+5.1.  Advanced Mitigations: SOOC-EV
 
    Generally at this point, enthusiastic cryptographers will point at
    Version 3 Onion Addresses and note that they are actual public keys,
@@ -424,7 +424,13 @@ Internet-Draft                    sooc                      October 2019
    mitigate in alternative ways, and in any case we may still evolve
    towards SOOC-EV as the the technology matures.
 
-4.7.2.  Reciprocal Attack: Shared Tor Gateways?
+   To be clear: I believe that SOOC-EV should probably be done.  I also
+   firmly do not believe that it is a pre-requisite, nor is it necessary
+   to do it "now" or to block SOOC until it is done.  Apart from the
+   reasons above, there is likely still some need for V3 Onion Addresses
+   to mature in deployments for one or two years.
+
+5.2.  Reciprocal Attack: Shared Tor Gateways?
 
    Having comprehended the above, there is also obviously a reciprocal
    risk which can be stated:
@@ -436,12 +442,6 @@ Internet-Draft                    sooc                      October 2019
 
    The response to which, again, is that although such may happen
    experimentally, the overwhelming means by which people access Tor is
-   by using a local client over localhost, one (or more) per user.  At
-   the "client" end, access to the Tor proxy is within the local trust
-   boundary, where worse things can happen.
-
-
-
 
 
 
@@ -450,7 +450,11 @@ Muffett                   Expires 22 April 2020                 [Page 8]
 Internet-Draft                    sooc                      October 2019
 
 
-5.  Linkfarm TBD
+   by using a local client over localhost, one (or more) per user.  At
+   the "client" end, access to the Tor proxy is within the local trust
+   boundary, where worse things can happen.
+
+6.  Linkfarm TBD
 
    For more on Onion Networking as a layer-3 network, see:
    https://www.youtube.com/watch?v=pebRZyg_bh8 (https://www.youtube.com/
@@ -466,7 +470,7 @@ Internet-Draft                    sooc                      October 2019
    secure/1526085754298237/ (https://www.facebook.com/notes/protect-the-
    graph/making-connections-to-facebook-more-secure/1526085754298237/)
 
-6.  Informative References
+7.  Informative References
 
    [RFC3548]  Josefsson, S., Ed., "The Base16, Base32, and Base64 Data
               Encodings", RFC 3548, DOI 10.17487/RFC3548, July 2003,
@@ -482,10 +486,6 @@ Author's Address
    Independent
 
    Email: alec.muffett@gmail.com
-
-
-
-
 
 
 

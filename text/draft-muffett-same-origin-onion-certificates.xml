@@ -205,8 +205,9 @@ chain checks that might otherwise be required to validate identity.</t>
 <section anchor="sooc-and-certificate-transparency"><name>SOOC and Certificate Transparency</name>
 <t>TODO</t>
 </section>
+</section>
 
-<section anchor="sooc-edge-cases-and-sooc-ev"><name>SOOC edge-cases, and &quot;SOOC-EV&quot;</name>
+<section anchor="sooc-edge-cases-and-sooc-ev"><name>SOOC Edge-Cases, and &quot;SOOC-EV&quot;</name>
 <t>It is necessary to recognise that there is one &quot;weak&quot; spot in the
 assertion that string comparison is sufficient to prove the binding
 between an Onion Address and a SSL Certificate Subject Alt-Name, and
@@ -290,6 +291,11 @@ without the extension (compare <eref target="https://crt.sh/?id=240277340">https
 yet, especially as it is within the power of the service provider to
 mitigate in alternative ways, and in any case we may still evolve
 towards SOOC-EV as the the technology matures.</t>
+<t>To be clear: I believe that SOOC-EV should probably be done.  I also
+firmly do not believe that it is a pre-requisite, nor is it necessary
+to do it &quot;now&quot; or to block SOOC until it is done.  Apart from the
+reasons above, there is likely still some need for V3 Onion Addresses
+to mature in deployments for one or two years.</t>
 </section>
 
 <section anchor="reciprocal-attack-shared-tor-gateways"><name>Reciprocal Attack: Shared Tor Gateways?</name>
@@ -308,7 +314,6 @@ experimentally, the overwhelming means by which people access Tor is
 by using a local client over localhost, one (or more) per user. At the
 &quot;client&quot; end, access to the Tor proxy is within the local trust
 boundary, where worse things can happen.</t>
-</section>
 </section>
 </section>
 
