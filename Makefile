@@ -3,6 +3,9 @@ DIR=text
 
 all: $(DIR)/$(NAME).txt $(DIR)/$(NAME).html
 
+push: all
+	git push
+
 $(DIR)/$(NAME).html: $(DIR)/$(NAME).xml
 	( cd $(DIR) && xml2rfc --html --v3 $(NAME).xml )
 
