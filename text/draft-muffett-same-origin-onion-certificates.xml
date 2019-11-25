@@ -61,59 +61,59 @@ certificate's trust chain, would otherwise be fully valid and
 trusted</t>
 </li>
 <li><t>where the certificate, if it has a basicConstraints extension, that
-extension MUST only be CA:FALSE</t>
+extension must only be CA:FALSE</t>
 </li>
-<li><t>where the certificate, if it has a commonName, that commonName MUST
+<li><t>where the certificate, if it has a commonName, that commonName must
 be the baseDomain as defined above</t>
 </li>
 <li><t>where the certificate, if it has subjectAlternativeNames, those
-subjectAlternativeNames MUST all be of type dNSname, MUST all be of
-valid format, and MUST have the baseDomain as the rightmost two
-labels.</t>
+subjectAlternativeNames must all be of type dNSname, must all be of
+valid DV format (wildcards permitted) and must have the baseDomain
+as the rightmost two labels.</t>
 </li>
 <li><t>where the certificate, if it cites any subjectAlternativeNames or
 other regisitrable domains, all of those subjectAlternativeNames or
-other registrable domains MUST have the baseDomain as the rightmost
+other registrable domains must have the baseDomain as the rightmost
 two labels.</t>
 </li>
 </ol>
+<t>If all of these contstraints are satisfied, this certificate is a
+valid SOOC certificate.</t>
 </section>
 
-<section anchor="protocol"><name>Protocol</name>
+<section anchor="sooc-example-protocol"><name>SOOC Example Protocol</name>
+<t>If you are a Browser, and...</t>
 
 <ol>
-<li><t>Connect to site.geo.subdomain.foo.onion over HTTPS in the normal way</t>
+<li><t>You connect to <tt>site.geo.subdomain.foo.onion</tt> to <tt>GET</tt> a URL via
+HTTPS in the normal way</t>
 </li>
-<li><t>If the TLD is .onion, confirm you have an opt-in setting enabled (probably by-default in TorBrowser)</t>
+<li><t>and you observe that the rightmost label of the TLD is .onion</t>
 </li>
-<li><t>and site.geo.subdomain.foo.onion offers you a certificate
-4.</t>
+<li><t>and that <tt>site.geo.subdomain.foo.onion</tt> offers you a certificate</t>
 
 <ol>
-<li><t>foo.onion</t>
+<li><t>then you must confirm that you have an opt-in setting enabled
+(probably default in TorBrowser)</t>
 </li>
-<li><t>*.foo.onion</t>
+<li><t>and you must confirm that the certificate satisfies ALL of the
+conditions of being a valid SOOC certificate</t>
 </li>
-<li><t>site.foo.onion</t>
+<li><t>and you must confirm that the baseDomain for the certificate,
+matches the rightmost two labels of the URL site</t>
 </li>
-<li><t>*.subdomain.foo.onion</t>
-</li>
-<li><t>site.subdomain.foo.onion</t>
-</li>
-<li><t>site.geo.subdomain.foo.onion</t>
-</li>
-<li><t>...and so forth
-5.</t>
+<li><t>and you must confirm that the certificate's
+subjectAlternativeNames would successfully match
+<tt>site.geo.subdomain.foo.onion</tt></t>
 </li>
 </ol></li>
-<li><t>and</t>
-</li>
-<li><t>THEN: skip the certificate chain check (and upwards validation of same) for this certificate; all other checks for this certificate should be performed with respect to current browser web-standards — including but not limited to: cipher suites, start/expiry dates, etc; see 6a, above.</t>
+<li><t>If all of the above are confirmed, then your certificate validation
+code must skip checking the certificiate trust chain.</t>
 </li>
 </ol>
 </section>
 
-<section anchor="background"><name>Background</name>
+<section anchor="why-sooc-is-necessary"><name>Why SOOC is Necessary</name>
 <t>There are many reasons why the Internet and WWW are equipped with a
 public key infrastructure (PKI), and the PKI offers many features and
 benefits; however its inarguable primary function is to provide a form
@@ -155,7 +155,7 @@ consideration of their benefits.</t>
 of ignoring transport security - such as IPsec - and has instead has
 built its own, where a server's &quot;identity&quot; may be provisionally
 bootstrapped by DNS resolution of of a layer-3 IP address, however
-that identity <bcp14>MUST</bcp14> be proven by proof-of-possession of a
+that identity <strong>must</strong> be proven by proof-of-possession of a
 cryptographic key that has been blessed by a trusted authority as
 pertaining to &quot;www.example.com&quot;.</t>
 <t>The extent of such blessing is variable: for DV certificates the
@@ -194,7 +194,7 @@ PKI stack has gradually evolved to solve for TCP/IP:</t>
 
 <ul>
 <li><t>There is no DNS name resolution service in onion networking, and in
-fact <xref target="RFC7686"></xref> section 2 specifies that there <bcp14>MUST NOT</bcp14> be
+fact <xref target="RFC7686"></xref> section 2 specifies that there <strong>must NOT</strong> be
 overlap with DNS; this is an important point to which we will return
 later.</t>
 </li>
@@ -225,11 +225,11 @@ applications at layer-7, and therefore cannot be relied upon.</t>
 <t>However: the encoding of onion addresses explicitly solves this problem:</t>
 
 <ul>
-<li><t>The connection <bcp14>MUST</bcp14> be an onion connection, because it was made
+<li><t>The connection <strong>must</strong> be an onion connection, because it was made
 using Tor-capable software, and because the &quot;.onion&quot; Special Use
 Domain Name is reserved for that purpose.</t>
 </li>
-<li><t>The connection <bcp14>MUST</bcp14> be to &quot;exampleonionaddr.onion&quot; because the
+<li><t>The connection <strong>must</strong> be to &quot;exampleonionaddr.onion&quot; because the
 Tor network will not permit otherwise.</t>
 </li>
 <li><t>Any subdomain or hostname is subordinate to the fact that the
@@ -250,10 +250,6 @@ checking; that onion sites may offer (eg: homebrew DV-compliant) TLS
 certificates which correspond solely and uniquely to themselves, and
 under those limited circumstances the client may skip the certificate
 chain checks that might otherwise be required to validate identity.</t>
-</section>
-
-<section anchor="sooc-conditions-and-technical-definition"><name>SOOC Conditions and Technical Definition</name>
-<t>TODO</t>
 </section>
 
 <section anchor="sooc-use-cases"><name>SOOC Use Cases</name>
@@ -424,8 +420,8 @@ boundary, where worse things can happen.</t>
 
 <back>
 <references><name>Informative References</name>
-<xi:include href="https://xml2rfc.ietf.org/public/rfc/bibxml/reference.RFC.7686.xml"/>
 <xi:include href="https://xml2rfc.ietf.org/public/rfc/bibxml/reference.RFC.3548.xml"/>
+<xi:include href="https://xml2rfc.ietf.org/public/rfc/bibxml/reference.RFC.7686.xml"/>
 </references>
 
 </back>

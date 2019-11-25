@@ -62,51 +62,48 @@ e.g., `abcdefghijklmnop.onion`
 2.  where the certificate, if the browser were to trust the certificate's trust chain, would
     otherwise be fully valid and trusted
 
-3.  where the certificate, if it has a basicConstraints extension, that extension MUST only be
+3.  where the certificate, if it has a basicConstraints extension, that extension must only be
     CA:FALSE
 
-4.  where the certificate, if it has a commonName, that commonName MUST be the baseDomain as defined
+4.  where the certificate, if it has a commonName, that commonName must be the baseDomain as defined
     above
 
-5.  where the certificate, if it has subjectAlternativeNames, those subjectAlternativeNames MUST all
-    be of type dNSname, MUST all be of valid format, and MUST have the baseDomain as the rightmost
-    two labels.
+5.  where the certificate, if it has subjectAlternativeNames, those subjectAlternativeNames must
+    all be of type dNSname, must all be of valid DV format (wildcards permitted) and must have the
+    baseDomain as the rightmost two labels.
 
 6.  where the certificate, if it cites any subjectAlternativeNames or other regisitrable domains,
-    all of those subjectAlternativeNames or other registrable domains MUST have the baseDomain as
+    all of those subjectAlternativeNames or other registrable domains must have the baseDomain as
     the rightmost two labels.
 
-# Protocol
+If all of these contstraints are satisfied, this certificate is a valid SOOC certificate.
 
-1.  Connect to site.geo.subdomain.foo.onion over HTTPS in the normal way
+# SOOC Example Protocol
 
-2.  If the TLD is .onion, confirm you have an opt-in setting enabled (probably by-default in
-    TorBrowser)
+If you are a Browser, and...
 
-3.  and site.geo.subdomain.foo.onion offers you a certificate 4.
+1.  You connect to `site.geo.subdomain.foo.onion` to `GET` a URL via HTTPS in the normal way
 
-    1.  foo.onion
+2.  and you observe that the rightmost label of the TLD is .onion
 
-    2.  *.foo.onion
+3.  and that `site.geo.subdomain.foo.onion` offers you a certificate
 
-    3.  site.foo.onion
+    1.  then you must confirm that you have an opt-in setting enabled (probably default in
+        TorBrowser)
 
-    4.  *.subdomain.foo.onion
+    2.  and you must confirm that the certificate satisfies ALL of the conditions of being a valid
+        SOOC certificate
 
-    5.  site.subdomain.foo.onion
+    3.  and you must confirm that the baseDomain for the certificate, matches the rightmost two
+        labels of the URL site
 
-    6.  site.geo.subdomain.foo.onion
+    4.  and you must confirm that the certificate's subjectAlternativeNames would successfully match
+        `site.geo.subdomain.foo.onion`
 
-    7.  ...and so forth 5.
+4.  If all of the above are confirmed, then your certificate validation code must skip checking the
+    certificiate trust chain.
 
-4.  and
-
-5.  THEN: skip the certificate chain check (and upwards validation of same) for this certificate;
-    all other checks for this certificate should be performed with respect to current browser
-    web-standards — including but not limited to: cipher suites, start/expiry dates, etc; see 6a,
-    above.
-
-# Background
+# Why SOOC is Necessary
 
 There are many reasons why the Internet and WWW are equipped with a public key infrastructure (PKI),
 and the PKI offers many features and benefits; however its inarguable primary function is to provide
@@ -141,7 +138,7 @@ benefits.
 In this environment our HTTPS ecosystem has evolved in the expectation of ignoring transport
 security - such as IPsec - and has instead has built its own, where a server's "identity" may be
 provisionally bootstrapped by DNS resolution of of a layer-3 IP address, however that identity
-**MUST** be proven by proof-of-possession of a cryptographic key that has been blessed by a trusted
+**must** be proven by proof-of-possession of a cryptographic key that has been blessed by a trusted
 authority as pertaining to "www.example.com".
 
 The extent of such blessing is variable: for DV certificates the requisite test is one of consistent
@@ -177,7 +174,7 @@ This representation pierces all of the layers of the network stack, and in one e
 most of the problems which the TLS PKI stack has gradually evolved to solve for TCP/IP:
 
  *  There is no DNS name resolution service in onion networking, and in fact [@RFC7686] section 2
-    specifies that there **MUST NOT** be overlap with DNS; this is an important point to which we
+    specifies that there **must NOT** be overlap with DNS; this is an important point to which we
     will return later.
 
  *  What the user types into the browser bar will defacto prove what site they are connected to; the
@@ -199,10 +196,10 @@ are generally not visible to HTTPS applications at layer-7, and therefore cannot
 
 However: the encoding of onion addresses explicitly solves this problem:
 
- *  The connection **MUST** be an onion connection, because it was made using Tor-capable software,
+ *  The connection **must** be an onion connection, because it was made using Tor-capable software,
     and because the ".onion" Special Use Domain Name is reserved for that purpose.
 
- *  The connection **MUST** be to "exampleonionaddr.onion" because the Tor network will not permit
+ *  The connection **must** be to "exampleonionaddr.onion" because the Tor network will not permit
     otherwise.
 
  *  Any subdomain or hostname is subordinate to the fact that the connection is made to
@@ -219,10 +216,6 @@ This observation is the basis of "Same Origin Onion Certificate" checking; that 
 may offer (eg: homebrew DV-compliant) TLS certificates which correspond solely and uniquely to
 themselves, and under those limited circumstances the client may skip the certificate chain checks
 that might otherwise be required to validate identity.
-
-# SOOC Conditions and Technical Definition
-
-TODO
 
 # SOOC Use Cases
 
