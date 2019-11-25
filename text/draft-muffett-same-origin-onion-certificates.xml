@@ -16,7 +16,6 @@
 <keyword>ssl</keyword>
 
 <abstract>
-<t>WORK IN PROGRESS - SEPTEMBER 2019</t>
 <t>Onion networking <xref target="RFC7686"></xref> offers technical features which obviate
 many of the risks upon which led to the development of our modern
 Certificate Authority Public Key Infrastructure; as an increasingly
@@ -24,19 +23,97 @@ popular technology for networking with strong trust requirements,
 onion networking would benefit from easier access to TLS certificates
 for HTTPS use.</t>
 <t>At the moment only EV certificates are available for onion network
-addresses, although DV certificates are under discussion.  This
-document defines a third mechanism - SOOC: Same Origin Onion
-Certificates - which would enable real-time, client-side validation of
-per-onion-address TLS certificates, fully equivalent (in defined
-circumstances) to validation of a certificate trust chain, but
+addresses, although DV certificates are under discussion; the
+potential downsides of issuing DV certificates for Onion Addresses are
+discussed below.</t>
+<t>This document defines a third possible mechanism - SOOC: Same Origin
+Onion Certificates - that would enable real-time, client-side
+validation of per-onion-address TLS certificates, fully equivalent (in
+defined circumstances) to validation of a certificate trust chain, but
 involving none of third parties, trust chains, or financial cost.</t>
+<t>In the simpest possible terms, SOOC is <em>not</em> a &quot;self-signed
+certificate&quot; proposal; instead it is a proposal that &quot;in very limited
+circumstances, we shall not care about signatures at all&quot;, with a
+codicil regarding how this may be improved in future.</t>
+<t>This distinction is important because it highlights that the initial
+implementation of SOOC certificates contain no additional features
+above or beyond the specifications of standard DV certificates, and
+require no tools to create other than standard <tt>openssl</tt> or <tt>mkcert</tt>
+to create.  This is part of the value proposition of SOOC, in order to
+lower the barriers to adoption by small sites and experimenters with
+limited experience of TLS.</t>
 </abstract>
 
 </front>
 
 <middle>
 
-<section anchor="introduction"><name>Introduction</name>
+<section anchor="sooc-certificate-specification"><name>SOOC Certificate Specification</name>
+<t>Using the Public Suffix List, let <tt>baseDomain</tt> be the Registrable
+Domain of the connected origin, e.g., <tt>abcdefghijklmnop.onion</tt></t>
+
+<ol>
+<li><t>A SOOC Certificate is a properly formatted DV or EV TLS
+certificate, per the browser's concept of web standards</t>
+</li>
+<li><t>where the certificate, if the browser were to trust the
+certificate's trust chain, would otherwise be fully valid and
+trusted</t>
+</li>
+<li><t>where the certificate, if it has a basicConstraints extension, that
+extension MUST only be CA:FALSE</t>
+</li>
+<li><t>where the certificate, if it has a commonName, that commonName MUST
+be the baseDomain as defined above</t>
+</li>
+<li><t>where the certificate, if it has subjectAlternativeNames, those
+subjectAlternativeNames MUST all be of type dNSname, MUST all be of
+valid format, and MUST have the baseDomain as the rightmost two
+labels.</t>
+</li>
+<li><t>where the certificate, if it cites any subjectAlternativeNames or
+other regisitrable domains, all of those subjectAlternativeNames or
+other registrable domains MUST have the baseDomain as the rightmost
+two labels.</t>
+</li>
+</ol>
+</section>
+
+<section anchor="protocol"><name>Protocol</name>
+
+<ol>
+<li><t>Connect to site.geo.subdomain.foo.onion over HTTPS in the normal way</t>
+</li>
+<li><t>If the TLD is .onion, confirm you have an opt-in setting enabled (probably by-default in TorBrowser)</t>
+</li>
+<li><t>and site.geo.subdomain.foo.onion offers you a certificate
+4.</t>
+
+<ol>
+<li><t>foo.onion</t>
+</li>
+<li><t>*.foo.onion</t>
+</li>
+<li><t>site.foo.onion</t>
+</li>
+<li><t>*.subdomain.foo.onion</t>
+</li>
+<li><t>site.subdomain.foo.onion</t>
+</li>
+<li><t>site.geo.subdomain.foo.onion</t>
+</li>
+<li><t>...and so forth
+5.</t>
+</li>
+</ol></li>
+<li><t>and</t>
+</li>
+<li><t>THEN: skip the certificate chain check (and upwards validation of same) for this certificate; all other checks for this certificate should be performed with respect to current browser web-standards — including but not limited to: cipher suites, start/expiry dates, etc; see 6a, above.</t>
+</li>
+</ol>
+</section>
+
+<section anchor="background"><name>Background</name>
 <t>There are many reasons why the Internet and WWW are equipped with a
 public key infrastructure (PKI), and the PKI offers many features and
 benefits; however its inarguable primary function is to provide a form
@@ -192,6 +269,10 @@ chain checks that might otherwise be required to validate identity.</t>
 
 <section anchor="sooc-and-dv-certificates"><name>SOOC and DV Certificates</name>
 <t>TODO</t>
+
+<section anchor="potential-negative-consequences-of-dv-certificates-for-onion-addresses"><name>Potential negative consequences of DV certificates for Onion Addresses</name>
+<t>TODO</t>
+</section>
 </section>
 
 <section anchor="sooc-and-letsencrypt"><name>SOOC and LetsEncrypt</name>
@@ -210,7 +291,7 @@ chain checks that might otherwise be required to validate identity.</t>
 <section anchor="sooc-edge-cases-and-sooc-ev"><name>SOOC Edge-Cases, and &quot;SOOC-EV&quot;</name>
 <t>It is necessary to recognise that there is one &quot;weak&quot; spot in the
 assertion that string comparison is sufficient to prove the binding
-between an Onion Address and a SSL Certificate Subject Alt-Name, and
+between an Onion Address and a SSL Certificate SubjectAlternativeName, and
 that is in a scenario where the content webserver has been been
 deployed on one (or more) machines which are separate from the machine
 that terminates (i.e.: &quot;hosts&quot;) the Onion Address AND, where the Tor
@@ -235,16 +316,16 @@ As such, currently lacking TLS-layer security, almost nobody typically
 deploys their onion server backend in a manner which could fall victim
 to this.  Most onion HTTP services are typically served over loopback.</t>
 <t>Equally: any onion site which uses a &quot;rewriter&quot; reverse-proxy (e.g.:
-New York Times, Propublica) is also typically NOT at risk from this
-attack, because the inbound HTTPS request is terminated on the &quot;onion&quot;
-host, immediately rewritten in terms of the address of the upstream
-service, and is passed over loopback onward as a fresh HTTPS
-reverse-proxy connection.</t>
-<t>As far as I am aware, the only onion service deployment where the
-above threat scenario would be a potential issue, is at Facebook; and
-if the Facebook devops team are at risk of someone interposing a fake
-server and server certificate into their infrastructure, then they
-have far bigger problems than mere onion service impersonation.</t>
+New York Times, BBC, Deutsche Welle, Propublica, Internet Archive) is
+also typically NOT at risk from this attack, because the inbound HTTPS
+request is terminated on the &quot;onion&quot; host, immediately rewritten in
+terms of the address of the upstream service, and is passed over
+loopback onward as a fresh HTTPS reverse-proxy connection.</t>
+<t>As far as the author is aware, the only onion service deployment where
+the above threat scenario would be a potential issue, is at Facebook;
+and if the Facebook devops team are at risk of someone interposing a
+fake server and server certificate into their infrastructure, then
+they have far bigger problems than mere onion service impersonation.</t>
 
 <section anchor="advanced-mitigations-sooc-ev"><name>Advanced Mitigations: SOOC-EV</name>
 <t>Generally at this point, enthusiastic cryptographers will point at
@@ -282,9 +363,9 @@ certificate, all in order to address this niche deployment risk.</t>
 however it is a tremendous hassle for a niche risk, and I believe that
 it should not be an progress to implmenting SOOC without implementing
 these &quot;Extended Validation&quot;-type checks.</t>
-<t>My rationale for the deferring SOOC-EV development - apart from the
-nicheness aspect - is also bolstered by the observation that &quot;Appendix
-F&quot; of CA/B-Forum Ballot 144:</t>
+<t>My rationale for deferring SOOC-EV - apart from the nicheness aspect -
+is also bolstered by the observation that &quot;Appendix F&quot; of CA/B-Forum
+Ballot 144:</t>
 <t><eref target="https://cabforum.org/2015/02/18/ballot-144-validation-rules-dot-onion-names/">https://cabforum.org/2015/02/18/ballot-144-validation-rules-dot-onion-names/</eref></t>
 <t>This describes the &quot;CAB Forum Tor Service Descriptor Hash Extension&quot;,
 a hash of the V2 Onion Public Key which Certificate Authorities are
@@ -293,25 +374,27 @@ ostensibly to both link the onion public key more tightly to the TLS
 certificate in the event that a colliding V2 Onion address is
 generated, but also to protect against the above described kinds of
 attack.</t>
-<t>I observe that absolutely no client code is actually implemented to
-check for this condition, to the extent that when Digicert misissued a
-certificate without the extension (compare
-<eref target="https://crt.sh/?id=240277340">https://crt.sh/?id=240277340</eref> with <eref target="https://crt.sh/?id=241547157)">https://crt.sh/?id=241547157)</eref> no-one
-actually noticed, except Digicert.</t>
+<t>There exists absolutely no client code actually implemented to check
+for, nor validate, this descriptor, to the extent that when Digicert
+misissued a certificate without the extension (compare
+<eref target="https://crt.sh/?id=240277340">https://crt.sh/?id=240277340</eref> with <eref target="https://crt.sh/?id=241547157)">https://crt.sh/?id=241547157)</eref>,
+no-one actually noticed, except for Digicert.</t>
 <t>As such, I don't believe that this attack is currently worthy of
 consideration, especially as it is within the power of the service
 provider to mitigate in alternative ways, and in any case we may still
 evolve towards SOOC-EV as the the technology matures.</t>
 <t>To be clear: I do believe that SOOC-EV should probably be done.  But I
-do not believe that it should form a pre-requisite, nor is it
-necessary to do it &quot;now&quot; and/or to block SOOC until it is done. Apart
-from the reasons above, there is likely still some need for V3 Onion
-Addresses to mature in deployments for one or two years.</t>
+do not believe that it should be a pre-requisite condition for SOOC,
+nor is it necessary to do it &quot;now&quot;, nor is any threat great enough to
+block SOOC until SOOC-EV is defined. Apart from the reasons stated
+above, there is likely still some need for V3 Onion Address blinding
+and key-derivation algorithms to mature and prove stability in
+deployments for a few years.</t>
 </section>
 
 <section anchor="reciprocal-attack-shared-tor-gateways"><name>Reciprocal Attack: Shared Tor Gateways?</name>
 <t>Having comprehended the above, there is also obviously a reciprocal
-risk which may be stated:</t>
+risk which can be stated:</t>
 
 <ul>
 <li><t>What about shared onion gateways? What if many people use one Tor
