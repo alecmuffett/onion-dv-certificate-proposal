@@ -49,24 +49,24 @@ Domain of the connected origin, e.g., <code>abcdefghijklmnop.onion</code></p>
 <li>A SOOC Certificate is a properly formatted DV or EV TLS
 certificate, per the browser&rsquo;s concept of web standards</li>
 <li>where the certificate, if the browser were to trust the
-certificate&rsquo;s trust chain, would otherwise be fully valid and
-trusted</li>
+certificate&rsquo;s trust chain, would otherwise be a fully valid and
+trusted certificate</li>
 <li>where the certificate, if it has a basicConstraints extension, that
-extension must only be CA:FALSE</li>
-<li>where the certificate, if it has a commonName, that commonName must
-be the baseDomain as defined above</li>
+extension <strong>MUST</strong> only be CA:FALSE</li>
+<li>where the certificate, if it has a commonName, that commonName
+<strong>MUST</strong> be equal to the baseDomain as defined above</li>
 <li>where the certificate, if it has subjectAlternativeNames, those
-subjectAlternativeNames must all be of type dNSname, must all be of
-valid DV format (wildcards permitted) and must have the baseDomain
-as the rightmost two labels.</li>
+subjectAlternativeNames <strong>MUST</strong> all be of type dNSname, <strong>MUST</strong>
+all be of valid DV format (wildcards permitted) and each of which
+<strong>MUST</strong> have the baseDomain as the rightmost two labels.</li>
 <li>where the certificate, if it cites any subjectAlternativeNames or
 other regisitrable domains, all of those subjectAlternativeNames or
-other registrable domains must have the baseDomain as the rightmost
-two labels.</li>
+other registrable domains <strong>MUST</strong> have the baseDomain as the
+rightmost two labels.</li>
 </ol>
 
-<p>If all of these contstraints are satisfied, this certificate is a
-valid SOOC certificate.</p>
+<p>If all of these contstraints are satisfied, the certificate is a valid
+SOOC certificate.</p>
 
 <h1 id="sooc-example-protocol">SOOC Example Protocol</h1>
 
@@ -79,18 +79,19 @@ HTTPS in the normal way</li>
 <li>and that <code>site.geo.subdomain.foo.onion</code> offers you a certificate
 
 <ol>
-<li>then you must confirm that you have an opt-in setting enabled
+<li>then you <strong>MUST</strong> confirm that you have an opt-in setting enabled
 (probably default in TorBrowser)</li>
-<li>and you must confirm that the certificate satisfies ALL of the
-conditions of being a valid SOOC certificate</li>
-<li>and you must confirm that the baseDomain for the certificate,
+<li>and you <strong>MUST</strong> confirm that the certificate satisfies ALL of the
+conditions of being a valid SOOC certificate with the baseDomain
+of <code>foo.onion</code></li>
+<li>and you <strong>MUST</strong> confirm that the baseDomain for the certificate,
 matches the rightmost two labels of the URL site</li>
-<li>and you must confirm that the certificate&rsquo;s
+<li>and you <strong>MUST</strong> confirm that the certificate&rsquo;s
 subjectAlternativeNames would successfully match
 <code>site.geo.subdomain.foo.onion</code></li>
 </ol></li>
 <li>If all of the above are confirmed, then your certificate validation
-code must skip checking the certificiate trust chain.</li>
+code <strong>MUST</strong> skip checking the certificiate trust chain.</li>
 </ol>
 
 <h1 id="why-sooc-is-necessary">Why SOOC is Necessary</h1>
@@ -136,7 +137,7 @@ consideration of their benefits.</p>
 of ignoring transport security - such as IPsec - and has instead has
 built its own, where a server&rsquo;s &ldquo;identity&rdquo; may be provisionally
 bootstrapped by DNS resolution of of a layer-3 IP address, however
-that identity <strong>must</strong> be proven by proof-of-possession of a
+that identity <strong>MUST</strong> be proven by proof-of-possession of a
 cryptographic key that has been blessed by a trusted authority as
 pertaining to &ldquo;www.example.com&rdquo;.</p>
 
@@ -182,7 +183,7 @@ PKI stack has gradually evolved to solve for TCP/IP:</p>
 
 <ul>
 <li>There is no DNS name resolution service in onion networking, and in
-fact <cite class="informative"><a href="#RFC7686"><sup>[RFC7686]</sup></a></cite> section 2 specifies that there <strong>must NOT</strong> be
+fact <cite class="informative"><a href="#RFC7686"><sup>[RFC7686]</sup></a></cite> section 2 specifies that there <strong>MUST NOT</strong> be
 overlap with DNS; this is an important point to which we will return
 later.</li>
 <li>What the user types into the browser bar will defacto prove what
@@ -233,38 +234,6 @@ checking; that onion sites may offer (eg: homebrew DV-compliant) TLS
 certificates which correspond solely and uniquely to themselves, and
 under those limited circumstances the client may skip the certificate
 chain checks that might otherwise be required to validate identity.</p>
-
-<h1 id="sooc-use-cases">SOOC Use Cases</h1>
-
-<p>TODO</p>
-
-<h2 id="sooc-to-complement-not-replace-ev-and-perhaps-dv">SOOC to complement, not replace, EV (and perhaps DV)</h2>
-
-<p>TODO</p>
-
-<h2 id="sooc-and-ev-certificates">SOOC and EV Certificates</h2>
-
-<p>TODO</p>
-
-<h2 id="sooc-and-dv-certificates">SOOC and DV Certificates</h2>
-
-<p>TODO</p>
-
-<h3 id="potential-negative-consequences-of-dv-certificates-for-onion-addresses">Potential negative consequences of DV certificates for Onion Addresses</h3>
-
-<p>TODO</p>
-
-<h2 id="sooc-and-letsencrypt">SOOC and LetsEncrypt</h2>
-
-<p>TODO</p>
-
-<h2 id="sooc-and-hsts">SOOC and HSTS</h2>
-
-<p>TODO</p>
-
-<h2 id="sooc-and-certificate-transparency">SOOC and Certificate Transparency</h2>
-
-<p>TODO</p>
 
 <h1 id="sooc-edge-cases-and-sooc-ev">SOOC Edge-Cases, and &ldquo;SOOC-EV&rdquo;</h1>
 
@@ -416,13 +385,29 @@ boundary, where worse things can happen.</p>
 
 <p>Facebook Onion Announcement
 <a href="https://www.facebook.com/notes/protect-the-graph/making-connections-to-facebook-more-secure/1526085754298237/">https://www.facebook.com/notes/protect-the-graph/making-connections-to-facebook-more-secure/1526085754298237/</a></p>
+
+<h1 id="topics-for-possible-expansion">Topics for possible expansion</h1>
+
+<ul>
+<li>SOOC Use Cases</li>
+<li>SOOC and Certificate Transparency</li>
+<li>SOOC and DV Certificates
+
+<ul>
+<li>Potential negative consequences of DV certificates for Onion Addresses</li>
+</ul></li>
+<li>SOOC and EV Certificates</li>
+<li>SOOC and HSTS</li>
+<li>SOOC and LetsEncrypt</li>
+<li>SOOC to complement, not replace, EV (and perhaps DV)</li>
+</ul>
 </section>
 <section data-matter="back"><h1 id="bibliography-section">Bibliography</h1>
 <div class="bibliography">
 <dl>
-<dt class="bibliography-cite" id="RFC7686">[RFC7686]</dt>
-<dd></dd>
 <dt class="bibliography-cite" id="RFC3548">[RFC3548]</dt>
+<dd></dd>
+<dt class="bibliography-cite" id="RFC7686">[RFC7686]</dt>
 <dd></dd>
 </dl>
 </section>

@@ -66,23 +66,23 @@ Domain of the connected origin, e.g., `abcdefghijklmnop.onion`
 1. A SOOC Certificate is a properly formatted DV or EV TLS
    certificate, per the browser's concept of web standards
 1. where the certificate, if the browser were to trust the
-   certificate's trust chain, would otherwise be fully valid and
-   trusted
+   certificate's trust chain, would otherwise be a fully valid and
+   trusted certificate
 1. where the certificate, if it has a basicConstraints extension, that
-   extension must only be CA:FALSE
-1. where the certificate, if it has a commonName, that commonName must
-   be the baseDomain as defined above
+   extension **MUST** only be CA:FALSE
+1. where the certificate, if it has a commonName, that commonName
+   **MUST** be equal to the baseDomain as defined above
 1. where the certificate, if it has subjectAlternativeNames, those
-   subjectAlternativeNames must all be of type dNSname, must all be of
-   valid DV format (wildcards permitted) and must have the baseDomain
-   as the rightmost two labels.
+   subjectAlternativeNames **MUST** all be of type dNSname, **MUST**
+   all be of valid DV format (wildcards permitted) and each of which
+   **MUST** have the baseDomain as the rightmost two labels.
 1. where the certificate, if it cites any subjectAlternativeNames or
    other regisitrable domains, all of those subjectAlternativeNames or
-   other registrable domains must have the baseDomain as the rightmost
-   two labels.
+   other registrable domains **MUST** have the baseDomain as the
+   rightmost two labels.
 
-If all of these contstraints are satisfied, this certificate is a
-valid SOOC certificate.
+If all of these contstraints are satisfied, the certificate is a valid
+SOOC certificate.
 
 # SOOC Example Protocol
 
@@ -92,17 +92,18 @@ If you are a Browser, and...
    HTTPS in the normal way
 1. and you observe that the rightmost label of the TLD is .onion
 1. and that `site.geo.subdomain.foo.onion` offers you a certificate
-  1. then you must confirm that you have an opt-in setting enabled
+  1. then you **MUST** confirm that you have an opt-in setting enabled
      (probably default in TorBrowser)
-  1. and you must confirm that the certificate satisfies ALL of the
-     conditions of being a valid SOOC certificate
-  1. and you must confirm that the baseDomain for the certificate,
+  1. and you **MUST** confirm that the certificate satisfies ALL of the
+     conditions of being a valid SOOC certificate with the baseDomain
+     of `foo.onion`
+  1. and you **MUST** confirm that the baseDomain for the certificate,
      matches the rightmost two labels of the URL site
-  1. and you must confirm that the certificate's
+  1. and you **MUST** confirm that the certificate's
      subjectAlternativeNames would successfully match
      `site.geo.subdomain.foo.onion`
 1. If all of the above are confirmed, then your certificate validation
-   code must skip checking the certificiate trust chain.
+   code **MUST** skip checking the certificiate trust chain.
 
 
 
@@ -147,7 +148,7 @@ In this environment our HTTPS ecosystem has evolved in the expectation
 of ignoring transport security - such as IPsec - and has instead has
 built its own, where a server's "identity" may be provisionally
 bootstrapped by DNS resolution of of a layer-3 IP address, however
-that identity **must** be proven by proof-of-possession of a
+that identity **MUST** be proven by proof-of-possession of a
 cryptographic key that has been blessed by a trusted authority as
 pertaining to "www.example.com".
 
@@ -192,7 +193,7 @@ and in one encoding it addresses most of the problems which the TLS
 PKI stack has gradually evolved to solve for TCP/IP:
 
 * There is no DNS name resolution service in onion networking, and in
-  fact [@RFC7686] section 2 specifies that there **must NOT** be
+  fact [@RFC7686] section 2 specifies that there **MUST NOT** be
   overlap with DNS; this is an important point to which we will return
   later.
 * What the user types into the browser bar will defacto prove what
@@ -240,38 +241,6 @@ checking; that onion sites may offer (eg: homebrew DV-compliant) TLS
 certificates which correspond solely and uniquely to themselves, and
 under those limited circumstances the client may skip the certificate
 chain checks that might otherwise be required to validate identity.
-
-# SOOC Use Cases
-
-TODO
-
-## SOOC to complement, not replace, EV (and perhaps DV)
-
-TODO
-
-## SOOC and EV Certificates
-
-TODO
-
-## SOOC and DV Certificates
-
-TODO
-
-### Potential negative consequences of DV certificates for Onion Addresses
-
-TODO
-
-## SOOC and LetsEncrypt
-
-TODO
-
-## SOOC and HSTS
-
-TODO
-
-## SOOC and Certificate Transparency
-
-TODO
 
 # SOOC Edge-Cases, and "SOOC-EV"
 
@@ -417,5 +386,16 @@ https://www.iana.org/assignments/special-use-domain-names/special-use-domain-nam
 
 Facebook Onion Announcement
 https://www.facebook.com/notes/protect-the-graph/making-connections-to-facebook-more-secure/1526085754298237/
+
+# Topics for possible expansion
+
+* SOOC Use Cases
+* SOOC and Certificate Transparency
+* SOOC and DV Certificates
+  * Potential negative consequences of DV certificates for Onion Addresses
+* SOOC and EV Certificates
+* SOOC and HSTS
+* SOOC and LetsEncrypt
+* SOOC to complement, not replace, EV (and perhaps DV)
 
 {backmatter}
