@@ -4,8 +4,8 @@
 
 Transport Layer Security                                      A. Muffett
 Internet-Draft                                               Independent
-Intended status: Informational                          25 November 2019
-Expires: 28 May 2020
+Intended status: Informational                             17 March 2020
+Expires: 18 September 2020
 
 
                      Same Origin Onion Certificates
@@ -53,9 +53,9 @@ Status of This Memo
 
 
 
-Muffett                    Expires 28 May 2020                  [Page 1]
+Muffett                 Expires 18 September 2020               [Page 1]
 
-Internet-Draft                    sooc                     November 2019
+Internet-Draft                    sooc                        March 2020
 
 
    Internet-Drafts are working documents of the Internet Engineering
@@ -68,11 +68,11 @@ Internet-Draft                    sooc                     November 2019
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 28 May 2020.
+   This Internet-Draft will expire on 18 September 2020.
 
 Copyright Notice
 
-   Copyright (c) 2019 IETF Trust and the persons identified as the
+   Copyright (c) 2020 IETF Trust and the persons identified as the
    document authors.  All rights reserved.
 
    This document is subject to BCP 78 and the IETF Trust's Legal
@@ -86,34 +86,17 @@ Copyright Notice
 
 Table of Contents
 
-   1.  SOOC Certificate Specification  . . . . . . . . . . . . . . .   3
+   1.  SOOC Certificate Specification  . . . . . . . . . . . . . . .   2
    2.  SOOC Example Protocol . . . . . . . . . . . . . . . . . . . .   3
    3.  Why SOOC is Necessary . . . . . . . . . . . . . . . . . . . .   4
      3.1.  Onion Networking compared to TLS PKI  . . . . . . . . . .   5
    4.  SOOC In Context . . . . . . . . . . . . . . . . . . . . . . .   6
-   5.  SOOC Use Cases  . . . . . . . . . . . . . . . . . . . . . . .   7
-     5.1.  SOOC to complement, not replace, EV (and perhaps
-           DV) . . . . . . . . . . . . . . . . . . . . . . . . . . .   7
-     5.2.  SOOC and EV Certificates  . . . . . . . . . . . . . . . .   7
-     5.3.  SOOC and DV Certificates  . . . . . . . . . . . . . . . .   7
-       5.3.1.  Potential negative consequences of DV
-               certificates for Onion Addresses  . . . . . . . . . .   7
-     5.4.  SOOC and LetsEncrypt  . . . . . . . . . . . . . . . . . .   7
-     5.5.  SOOC and HSTS . . . . . . . . . . . . . . . . . . . . . .   7
-     5.6.  SOOC and Certificate Transparency . . . . . . . . . . . .   8
-   6.  SOOC Edge-Cases, and "SOOC-EV"  . . . . . . . . . . . . . . .   8
-     6.1.  Advanced Mitigations: SOOC-EV . . . . . . . . . . . . . .   9
-     6.2.  Reciprocal Attack: Shared Tor Gateways? . . . . . . . . .  10
-   7.  Linkfarm TBD  . . . . . . . . . . . . . . . . . . . . . . . .  11
-   8.  Informative References  . . . . . . . . . . . . . . . . . . .  11
-
-
-
-Muffett                    Expires 28 May 2020                  [Page 2]
-
-Internet-Draft                    sooc                     November 2019
-
-
+   5.  SOOC Edge-Cases, and "SOOC-EV"  . . . . . . . . . . . . . . .   7
+     5.1.  Advanced Mitigations: SOOC-EV . . . . . . . . . . . . . .   8
+     5.2.  Reciprocal Attack: Shared Tor Gateways? . . . . . . . . .   9
+   6.  Linkfarm TBD  . . . . . . . . . . . . . . . . . . . . . . . .  10
+   7.  Topics for possible expansion . . . . . . . . . . . . . . . .  10
+   8.  Informative References  . . . . . . . . . . . . . . . . . . .  10
    Author's Address  . . . . . . . . . . . . . . . . . . . . . . . .  11
 
 1.  SOOC Certificate Specification
@@ -124,27 +107,34 @@ Internet-Draft                    sooc                     November 2019
    1.  A SOOC Certificate is a properly formatted DV or EV TLS
        certificate, per the browser's concept of web standards
 
+
+
+Muffett                 Expires 18 September 2020               [Page 2]
+
+Internet-Draft                    sooc                        March 2020
+
+
    2.  where the certificate, if the browser were to trust the
-       certificate's trust chain, would otherwise be fully valid and
-       trusted
+       certificate's trust chain, would otherwise be a fully valid and
+       trusted certificate
 
    3.  where the certificate, if it has a basicConstraints extension,
-       that extension must only be CA:FALSE
+       that extension MUST only be CA:FALSE
 
    4.  where the certificate, if it has a commonName, that commonName
-       must be the baseDomain as defined above
+       MUST be equal to the baseDomain as defined above
 
    5.  where the certificate, if it has subjectAlternativeNames, those
-       subjectAlternativeNames must all be of type dNSname, must all be
-       of valid DV format (wildcards permitted) and must have the
-       baseDomain as the rightmost two labels.
+       subjectAlternativeNames MUST all be of type dNSname, MUST all be
+       of valid DV format (wildcards permitted) and each of which MUST
+       have the baseDomain as the rightmost two labels.
 
    6.  where the certificate, if it cites any subjectAlternativeNames or
        other regisitrable domains, all of those subjectAlternativeNames
-       or other registrable domains must have the baseDomain as the
+       or other registrable domains MUST have the baseDomain as the
        rightmost two labels.
 
-   If all of these contstraints are satisfied, this certificate is a
+   If all of these contstraints are satisfied, the certificate is a
    valid SOOC certificate.
 
 2.  SOOC Example Protocol
@@ -158,30 +148,30 @@ Internet-Draft                    sooc                     November 2019
 
    3.  and that "site.geo.subdomain.foo.onion" offers you a certificate
 
-       1.  then you must confirm that you have an opt-in setting enabled
+       1.  then you MUST confirm that you have an opt-in setting enabled
            (probably default in TorBrowser)
 
+       2.  and you MUST confirm that the certificate satisfies ALL of
+           the conditions of being a valid SOOC certificate with the
+           baseDomain of "foo.onion"
 
-
-
-
-Muffett                    Expires 28 May 2020                  [Page 3]
-
-Internet-Draft                    sooc                     November 2019
-
-
-       2.  and you must confirm that the certificate satisfies ALL of
-           the conditions of being a valid SOOC certificate
-
-       3.  and you must confirm that the baseDomain for the certificate,
+       3.  and you MUST confirm that the baseDomain for the certificate,
            matches the rightmost two labels of the URL site
 
-       4.  and you must confirm that the certificate's
+       4.  and you MUST confirm that the certificate's
            subjectAlternativeNames would successfully match
            "site.geo.subdomain.foo.onion"
 
+
+
+
+Muffett                 Expires 18 September 2020               [Page 3]
+
+Internet-Draft                    sooc                        March 2020
+
+
    4.  If all of the above are confirmed, then your certificate
-       validation code must skip checking the certificiate trust chain.
+       validation code MUST skip checking the certificiate trust chain.
 
 3.  Why SOOC is Necessary
 
@@ -217,15 +207,6 @@ Internet-Draft                    sooc                     November 2019
       cache-poisoned, or simply tampered-with in flight, also homoglyph
       "lookalike" domains (eg: www.examp1e.com) are also possible
 
-
-
-
-
-Muffett                    Expires 28 May 2020                  [Page 4]
-
-Internet-Draft                    sooc                     November 2019
-
-
    The benefits of any intra-layer trust mechanism - eg: IPsec
    Authentication Header (AH) & Encapsulating Security Payload (ESP) at
    layer-3 - are typically isolated and not known to other layers of the
@@ -236,9 +217,17 @@ Internet-Draft                    sooc                     November 2019
    expectation of ignoring transport security - such as IPsec - and has
    instead has built its own, where a server's "identity" may be
    provisionally bootstrapped by DNS resolution of of a layer-3 IP
-   address, however that identity *must* be proven by proof-of-
-   possession of a cryptographic key that has been blessed by a trusted
-   authority as pertaining to "www.example.com".
+   address, however that identity MUST be proven by proof-of-possession
+
+
+
+Muffett                 Expires 18 September 2020               [Page 4]
+
+Internet-Draft                    sooc                        March 2020
+
+
+   of a cryptographic key that has been blessed by a trusted authority
+   as pertaining to "www.example.com".
 
    The extent of such blessing is variable: for DV certificates the
    requisite test is one of consistent DNS resolution (eg: LetsEncrypt);
@@ -273,15 +262,6 @@ Internet-Draft                    sooc                     November 2019
    version 2 onion address representing a server that possesses a
    1024-bit RSA public key which has an 80-bit-truncated SHA-1 hash of
    0x25c0c7ac8e6a1cd00c71 ([RFC3548] base32 "EXAMPLEONIONADDR"); and
-
-
-
-
-Muffett                    Expires 28 May 2020                  [Page 5]
-
-Internet-Draft                    sooc                     November 2019
-
-
    where the "www" prefix hostname/subdomain will ignored, although if
    specified it will be passed onward in an HTTPS "Host:" header.
 
@@ -290,9 +270,17 @@ Internet-Draft                    sooc                     November 2019
    PKI stack has gradually evolved to solve for TCP/IP:
 
    *  There is no DNS name resolution service in onion networking, and
-      in fact [RFC7686] section 2 specifies that there *must NOT* be
+      in fact [RFC7686] section 2 specifies that there MUST NOT be
       overlap with DNS; this is an important point to which we will
       return later.
+
+
+
+
+Muffett                 Expires 18 September 2020               [Page 5]
+
+Internet-Draft                    sooc                        March 2020
+
 
    *  What the user types into the browser bar will defacto prove what
       site they are connected to; the Tor Onion Network at layer 3 will
@@ -329,15 +317,6 @@ Internet-Draft                    sooc                     November 2019
    *  Any subdomain or hostname is subordinate to the fact that the
       connection is made to "exampleonionaddr.onion", because (as a
       layer-3 address) there are actually no such things as "subdomains"
-
-
-
-
-Muffett                    Expires 28 May 2020                  [Page 6]
-
-Internet-Draft                    sooc                     November 2019
-
-
       or "hostnames", and thus this information is purely advisory, or
       for compatability.
 
@@ -351,54 +330,19 @@ Internet-Draft                    sooc                     November 2019
 
    This observation is the basis of "Same Origin Onion Certificate"
    checking; that onion sites may offer (eg: homebrew DV-compliant) TLS
+
+
+
+Muffett                 Expires 18 September 2020               [Page 6]
+
+Internet-Draft                    sooc                        March 2020
+
+
    certificates which correspond solely and uniquely to themselves, and
    under those limited circumstances the client may skip the certificate
    chain checks that might otherwise be required to validate identity.
 
-5.  SOOC Use Cases
-
-   TODO
-
-5.1.  SOOC to complement, not replace, EV (and perhaps DV)
-
-   TODO
-
-5.2.  SOOC and EV Certificates
-
-   TODO
-
-5.3.  SOOC and DV Certificates
-
-   TODO
-
-5.3.1.  Potential negative consequences of DV certificates for Onion Addresses
-
-   TODO
-
-5.4.  SOOC and LetsEncrypt
-
-   TODO
-
-5.5.  SOOC and HSTS
-
-   TODO
-
-
-
-
-
-
-
-Muffett                    Expires 28 May 2020                  [Page 7]
-
-Internet-Draft                    sooc                     November 2019
-
-
-5.6.  SOOC and Certificate Transparency
-
-   TODO
-
-6.  SOOC Edge-Cases, and "SOOC-EV"
+5.  SOOC Edge-Cases, and "SOOC-EV"
 
    It is necessary to recognise that there is one "weak" spot in the
    assertion that string comparison is sufficient to prove the binding
@@ -445,9 +389,9 @@ Internet-Draft                    sooc                     November 2019
 
 
 
-Muffett                    Expires 28 May 2020                  [Page 8]
+Muffett                 Expires 18 September 2020               [Page 7]
 
-Internet-Draft                    sooc                     November 2019
+Internet-Draft                    sooc                        March 2020
 
 
    Facebook; and if the Facebook devops team are at risk of someone
@@ -455,7 +399,7 @@ Internet-Draft                    sooc                     November 2019
    infrastructure, then they have far bigger problems than mere onion
    service impersonation.
 
-6.1.  Advanced Mitigations: SOOC-EV
+5.1.  Advanced Mitigations: SOOC-EV
 
    Generally at this point, enthusiastic cryptographers will point at
    Version 3 Onion Addresses and note that they are actual public keys,
@@ -501,9 +445,9 @@ Internet-Draft                    sooc                     November 2019
 
 
 
-Muffett                    Expires 28 May 2020                  [Page 9]
+Muffett                 Expires 18 September 2020               [Page 8]
 
-Internet-Draft                    sooc                     November 2019
+Internet-Draft                    sooc                        March 2020
 
 
    My rationale for deferring SOOC-EV - apart from the nicheness aspect
@@ -542,7 +486,7 @@ Internet-Draft                    sooc                     November 2019
    Address blinding and key-derivation algorithms to mature and prove
    stability in deployments for a few years.
 
-6.2.  Reciprocal Attack: Shared Tor Gateways?
+5.2.  Reciprocal Attack: Shared Tor Gateways?
 
    Having comprehended the above, there is also obviously a reciprocal
    risk which can be stated:
@@ -557,16 +501,16 @@ Internet-Draft                    sooc                     November 2019
 
 
 
-Muffett                    Expires 28 May 2020                 [Page 10]
+Muffett                 Expires 18 September 2020               [Page 9]
 
-Internet-Draft                    sooc                     November 2019
+Internet-Draft                    sooc                        March 2020
 
 
    by using a local client over loopback, one (or more) per user.  At
    the "client" end, access to the Tor proxy is within the local trust
    boundary, where worse things can happen.
 
-7.  Linkfarm TBD
+6.  Linkfarm TBD
 
    For more on Onion Networking as a layer-3 network, see:
    https://www.youtube.com/watch?v=pebRZyg_bh8 (https://www.youtube.com/
@@ -582,6 +526,25 @@ Internet-Draft                    sooc                     November 2019
    secure/1526085754298237/ (https://www.facebook.com/notes/protect-the-
    graph/making-connections-to-facebook-more-secure/1526085754298237/)
 
+7.  Topics for possible expansion
+
+   *  SOOC Use Cases
+
+   *  SOOC and Certificate Transparency
+
+   *  SOOC and DV Certificates
+
+      -  Potential negative consequences of DV certificates for Onion
+         Addresses
+
+   *  SOOC and EV Certificates
+
+   *  SOOC and HSTS
+
+   *  SOOC and LetsEncrypt
+
+   *  SOOC to complement, not replace, EV (and perhaps DV)
+
 8.  Informative References
 
    [RFC3548]  Josefsson, S., Ed., "The Base16, Base32, and Base64 Data
@@ -591,6 +554,13 @@ Internet-Draft                    sooc                     November 2019
    [RFC7686]  Appelbaum, J. and A. Muffett, "The ".onion" Special-Use
               Domain Name", RFC 7686, DOI 10.17487/RFC7686, October
               2015, <https://www.rfc-editor.org/info/rfc7686>.
+
+
+
+Muffett                 Expires 18 September 2020              [Page 10]
+
+Internet-Draft                    sooc                        March 2020
+
 
 Author's Address
 
@@ -613,4 +583,34 @@ Author's Address
 
 
 
-Muffett                    Expires 28 May 2020                 [Page 11]
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Muffett                 Expires 18 September 2020              [Page 11]

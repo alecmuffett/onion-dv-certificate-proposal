@@ -60,23 +60,23 @@ e.g., `abcdefghijklmnop.onion`
     of web standards
 
 2.  where the certificate, if the browser were to trust the certificate's trust chain, would
-    otherwise be fully valid and trusted
+    otherwise be a fully valid and trusted certificate
 
-3.  where the certificate, if it has a basicConstraints extension, that extension must only be
+3.  where the certificate, if it has a basicConstraints extension, that extension **MUST** only be
     CA:FALSE
 
-4.  where the certificate, if it has a commonName, that commonName must be the baseDomain as defined
-    above
+4.  where the certificate, if it has a commonName, that commonName **MUST** be equal to the
+    baseDomain as defined above
 
-5.  where the certificate, if it has subjectAlternativeNames, those subjectAlternativeNames must
-    all be of type dNSname, must all be of valid DV format (wildcards permitted) and must have the
-    baseDomain as the rightmost two labels.
+5.  where the certificate, if it has subjectAlternativeNames, those subjectAlternativeNames **MUST**
+    all be of type dNSname, **MUST** all be of valid DV format (wildcards permitted) and each of
+    which **MUST** have the baseDomain as the rightmost two labels.
 
 6.  where the certificate, if it cites any subjectAlternativeNames or other regisitrable domains,
-    all of those subjectAlternativeNames or other registrable domains must have the baseDomain as
-    the rightmost two labels.
+    all of those subjectAlternativeNames or other registrable domains **MUST** have the baseDomain
+    as the rightmost two labels.
 
-If all of these contstraints are satisfied, this certificate is a valid SOOC certificate.
+If all of these contstraints are satisfied, the certificate is a valid SOOC certificate.
 
 # SOOC Example Protocol
 
@@ -88,20 +88,20 @@ If you are a Browser, and...
 
 3.  and that `site.geo.subdomain.foo.onion` offers you a certificate
 
-    1.  then you must confirm that you have an opt-in setting enabled (probably default in
+    1.  then you **MUST** confirm that you have an opt-in setting enabled (probably default in
         TorBrowser)
 
-    2.  and you must confirm that the certificate satisfies ALL of the conditions of being a valid
-        SOOC certificate
+    2.  and you **MUST** confirm that the certificate satisfies ALL of the conditions of being a
+        valid SOOC certificate with the baseDomain of `foo.onion`
 
-    3.  and you must confirm that the baseDomain for the certificate, matches the rightmost two
+    3.  and you **MUST** confirm that the baseDomain for the certificate, matches the rightmost two
         labels of the URL site
 
-    4.  and you must confirm that the certificate's subjectAlternativeNames would successfully match
-        `site.geo.subdomain.foo.onion`
+    4.  and you **MUST** confirm that the certificate's subjectAlternativeNames would successfully
+        match `site.geo.subdomain.foo.onion`
 
-4.  If all of the above are confirmed, then your certificate validation code must skip checking the
-    certificiate trust chain.
+4.  If all of the above are confirmed, then your certificate validation code **MUST** skip checking
+    the certificiate trust chain.
 
 # Why SOOC is Necessary
 
@@ -138,7 +138,7 @@ benefits.
 In this environment our HTTPS ecosystem has evolved in the expectation of ignoring transport
 security - such as IPsec - and has instead has built its own, where a server's "identity" may be
 provisionally bootstrapped by DNS resolution of of a layer-3 IP address, however that identity
-**must** be proven by proof-of-possession of a cryptographic key that has been blessed by a trusted
+**MUST** be proven by proof-of-possession of a cryptographic key that has been blessed by a trusted
 authority as pertaining to "www.example.com".
 
 The extent of such blessing is variable: for DV certificates the requisite test is one of consistent
@@ -174,7 +174,7 @@ This representation pierces all of the layers of the network stack, and in one e
 most of the problems which the TLS PKI stack has gradually evolved to solve for TCP/IP:
 
  *  There is no DNS name resolution service in onion networking, and in fact [@RFC7686] section 2
-    specifies that there **must NOT** be overlap with DNS; this is an important point to which we
+    specifies that there **MUST NOT** be overlap with DNS; this is an important point to which we
     will return later.
 
  *  What the user types into the browser bar will defacto prove what site they are connected to; the
@@ -216,38 +216,6 @@ This observation is the basis of "Same Origin Onion Certificate" checking; that 
 may offer (eg: homebrew DV-compliant) TLS certificates which correspond solely and uniquely to
 themselves, and under those limited circumstances the client may skip the certificate chain checks
 that might otherwise be required to validate identity.
-
-# SOOC Use Cases
-
-TODO
-
-## SOOC to complement, not replace, EV (and perhaps DV)
-
-TODO
-
-## SOOC and EV Certificates
-
-TODO
-
-## SOOC and DV Certificates
-
-TODO
-
-### Potential negative consequences of DV certificates for Onion Addresses
-
-TODO
-
-## SOOC and LetsEncrypt
-
-TODO
-
-## SOOC and HSTS
-
-TODO
-
-## SOOC and Certificate Transparency
-
-TODO
 
 # SOOC Edge-Cases, and "SOOC-EV"
 
@@ -298,7 +266,7 @@ They are correct to say this, however this raises two problems:
     document.
 
 2.  The Version 3 Onion addresses are (by Tor policy) never used to sign anything
-    [https://gitweb.torproject.org/torspec.git/tree/rend-spec-v3.txt#n557](https://gitweb.torproject.org/torspec.git/tree/rend-spec-v3.txt#n557)
+    <https://gitweb.torproject.org/torspec.git/tree/rend-spec-v3.txt#n557>
 
 Quote:
 
@@ -324,7 +292,7 @@ implementing these "Extended Validation"-type checks.
 My rationale for deferring SOOC-EV - apart from the nicheness aspect - is also bolstered by the
 observation that "Appendix F" of CA/B-Forum Ballot 144:
 
-[https://cabforum.org/2015/02/18/ballot-144-validation-rules-dot-onion-names/](https://cabforum.org/2015/02/18/ballot-144-validation-rules-dot-onion-names/)
+<https://cabforum.org/2015/02/18/ballot-144-validation-rules-dot-onion-names/>
 
 This describes the "CAB Forum Tor Service Descriptor Hash Extension", a hash of the V2 Onion Public
 Key which Certificate Authorities are obliged to bind into the EV TLS Onion Certificates that they
@@ -332,11 +300,10 @@ issue, ostensibly to both link the onion public key more tightly to the TLS cert
 that a colliding V2 Onion address is generated, but also to protect against the above described
 kinds of attack.
 
-There exists absolutely no client code actually implemented to check for, nor validate,
-this descriptor, to the extent that when Digicert misissued a certificate without the
-extension (compare [https://crt.sh/?id=240277340](https://crt.sh/?id=240277340) with
-[https://crt.sh/?id=241547157)](https://crt.sh/?id=241547157)), no-one actually noticed, except for
-Digicert.
+There exists absolutely no client code actually implemented to check for, nor validate, this
+descriptor, to the extent that when Digicert misissued a certificate without the extension (compare
+<https://crt.sh/?id=240277340> with <https://crt.sh/?id=241547157)>, no-one actually noticed, except
+for Digicert.
 
 As such, I don't believe that this attack is currently worthy of consideration, especially as it
 is within the power of the service provider to mitigate in alternative ways, and in any case we may
@@ -364,12 +331,30 @@ can happen.
 # Linkfarm TBD
 
 For more on Onion Networking as a layer-3 network, see:
-[https://www.youtube.com/watch?v=pebRZyg_bh8](https://www.youtube.com/watch?v=pebRZyg_bh8)
+<https://www.youtube.com/watch?v=pebRZyg_bh8>
 
 IANA Special-Use Domain Names
-[https://www.iana.org/assignments/special-use-domain-names/special-use-domain-names.xhtml](https://www.iana.org/assignments/special-use-domain-names/special-use-domain-names.xhtml)
+<https://www.iana.org/assignments/special-use-domain-names/special-use-domain-names.xhtml>
 
 Facebook Onion Announcement
-[https://www.facebook.com/notes/protect-the-graph/making-connections-to-facebook-more-secure/1526085754298237/](https://www.facebook.com/notes/protect-the-graph/making-connections-to-facebook-more-secure/1526085754298237/)
+<https://www.facebook.com/notes/protect-the-graph/making-connections-to-facebook-more-secure/1526085754298237/>
+
+# Topics for possible expansion
+
+ *  SOOC Use Cases
+
+ *  SOOC and Certificate Transparency
+
+ *  SOOC and DV Certificates
+
+     -  Potential negative consequences of DV certificates for Onion Addresses
+
+ *  SOOC and EV Certificates
+
+ *  SOOC and HSTS
+
+ *  SOOC and LetsEncrypt
+
+ *  SOOC to complement, not replace, EV (and perhaps DV)
 
 {backmatter}
